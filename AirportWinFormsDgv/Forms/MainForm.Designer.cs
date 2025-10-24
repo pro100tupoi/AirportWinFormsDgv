@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             var resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             statusStrip1 = new StatusStrip();
             toolStripStatusLabelArrivingflights = new ToolStripStatusLabel();
@@ -39,18 +40,20 @@
             toolStripButtonEditing = new ToolStripButton();
             toolStripButtonDelete = new ToolStripButton();
             dataGridViewflights = new DataGridView();
-            FlightnumberColumn = new DataGridViewTextBoxColumn();
-            AircrafttypeColumn = new DataGridViewTextBoxColumn();
-            ArrivaltimeColumn = new DataGridViewTextBoxColumn();
-            NumberofpassengersColumn = new DataGridViewTextBoxColumn();
-            TaxperpassengerColumn = new DataGridViewTextBoxColumn();
-            NumberofcrewColumn = new DataGridViewTextBoxColumn();
-            TaxpercrewColumn = new DataGridViewTextBoxColumn();
-            ServicepercentageColumn = new DataGridViewTextBoxColumn();
+            errorProvider = new ErrorProvider(components);
             RevenueColumn = new DataGridViewTextBoxColumn();
+            ServicepercentageColumn = new DataGridViewTextBoxColumn();
+            TaxpercrewColumn = new DataGridViewTextBoxColumn();
+            NumberofcrewColumn = new DataGridViewTextBoxColumn();
+            TaxperpassengerColumn = new DataGridViewTextBoxColumn();
+            NumberofpassengersColumn = new DataGridViewTextBoxColumn();
+            ArrivaltimeColumn = new DataGridViewTextBoxColumn();
+            AircrafttypeColumn = new DataGridViewTextBoxColumn();
+            FlightnumberColumn = new DataGridViewTextBoxColumn();
             statusStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewflights).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
             SuspendLayout();
             // 
             // statusStrip1
@@ -97,6 +100,7 @@
             // 
             // toolStripButtonAdd
             // 
+            toolStripButtonAdd.BackColor = Color.LawnGreen;
             toolStripButtonAdd.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolStripButtonAdd.Image = (Image)resources.GetObject("toolStripButtonAdd.Image");
             toolStripButtonAdd.ImageTransparentColor = Color.Magenta;
@@ -107,6 +111,7 @@
             // 
             // toolStripButtonEditing
             // 
+            toolStripButtonEditing.BackColor = Color.Gold;
             toolStripButtonEditing.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolStripButtonEditing.Image = (Image)resources.GetObject("toolStripButtonEditing.Image");
             toolStripButtonEditing.ImageTransparentColor = Color.Magenta;
@@ -117,6 +122,7 @@
             // 
             // toolStripButtonDelete
             // 
+            toolStripButtonDelete.BackColor = Color.Red;
             toolStripButtonDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolStripButtonDelete.Image = (Image)resources.GetObject("toolStripButtonDelete.Image");
             toolStripButtonDelete.ImageTransparentColor = Color.Magenta;
@@ -137,47 +143,15 @@
             dataGridViewflights.CellContentClick += dataGridViewflights_CellContentClick;
             dataGridViewflights.CellFormatting += dataGridViewflights_CellFormatting;
             // 
-            // FlightnumberColumn
+            // errorProvider
             // 
-            FlightnumberColumn.DataPropertyName = "Flightnumber";
-            FlightnumberColumn.HeaderText = "Номер рейса";
-            FlightnumberColumn.Name = "FlightnumberColumn";
+            errorProvider.ContainerControl = this;
             // 
-            // AircrafttypeColumn
+            // RevenueColumn
             // 
-            AircrafttypeColumn.DataPropertyName = "Aircrafttype";
-            AircrafttypeColumn.HeaderText = "Тип самолёта";
-            AircrafttypeColumn.Name = "AircrafttypeColumn";
-            // 
-            // ArrivaltimeColumn
-            // 
-            ArrivaltimeColumn.DataPropertyName = "Arrivaltime";
-            ArrivaltimeColumn.HeaderText = "Время прибытия";
-            ArrivaltimeColumn.Name = "ArrivaltimeColumn";
-            // 
-            // NumberofpassengersColumn
-            // 
-            NumberofpassengersColumn.DataPropertyName = "Numberofpassengers";
-            NumberofpassengersColumn.HeaderText = "Количество пассажиров";
-            NumberofpassengersColumn.Name = "NumberofpassengersColumn";
-            // 
-            // TaxperpassengerColumn
-            // 
-            TaxperpassengerColumn.DataPropertyName = "Taxperpassenger";
-            TaxperpassengerColumn.HeaderText = "Сбор на пассажира";
-            TaxperpassengerColumn.Name = "TaxperpassengerColumn";
-            // 
-            // NumberofcrewColumn
-            // 
-            NumberofcrewColumn.DataPropertyName = "Numberofcrew";
-            NumberofcrewColumn.HeaderText = "Количество экипажа";
-            NumberofcrewColumn.Name = "NumberofcrewColumn";
-            // 
-            // TaxpercrewColumn
-            // 
-            TaxpercrewColumn.DataPropertyName = "Taxpercrew";
-            TaxpercrewColumn.HeaderText = "Сбор на экипаж";
-            TaxpercrewColumn.Name = "TaxpercrewColumn";
+            RevenueColumn.DataPropertyName = "Revenue";
+            RevenueColumn.HeaderText = "Выручка";
+            RevenueColumn.Name = "RevenueColumn";
             // 
             // ServicepercentageColumn
             // 
@@ -185,11 +159,47 @@
             ServicepercentageColumn.HeaderText = "Процент надбавки за обслуживание";
             ServicepercentageColumn.Name = "ServicepercentageColumn";
             // 
-            // RevenueColumn
+            // TaxpercrewColumn
             // 
-            RevenueColumn.DataPropertyName = "Revenue";
-            RevenueColumn.HeaderText = "Выручка";
-            RevenueColumn.Name = "RevenueColumn";
+            TaxpercrewColumn.DataPropertyName = "Taxpercrew";
+            TaxpercrewColumn.HeaderText = "Сбор на экипаж";
+            TaxpercrewColumn.Name = "TaxpercrewColumn";
+            // 
+            // NumberofcrewColumn
+            // 
+            NumberofcrewColumn.DataPropertyName = "Numberofcrew";
+            NumberofcrewColumn.HeaderText = "Количество экипажа";
+            NumberofcrewColumn.Name = "NumberofcrewColumn";
+            // 
+            // TaxperpassengerColumn
+            // 
+            TaxperpassengerColumn.DataPropertyName = "Taxperpassenger";
+            TaxperpassengerColumn.HeaderText = "Сбор на пассажира";
+            TaxperpassengerColumn.Name = "TaxperpassengerColumn";
+            // 
+            // NumberofpassengersColumn
+            // 
+            NumberofpassengersColumn.DataPropertyName = "Numberofpassengers";
+            NumberofpassengersColumn.HeaderText = "Количество пассажиров";
+            NumberofpassengersColumn.Name = "NumberofpassengersColumn";
+            // 
+            // ArrivaltimeColumn
+            // 
+            ArrivaltimeColumn.DataPropertyName = "Arrivaltime";
+            ArrivaltimeColumn.HeaderText = "Время прибытия";
+            ArrivaltimeColumn.Name = "ArrivaltimeColumn";
+            // 
+            // AircrafttypeColumn
+            // 
+            AircrafttypeColumn.DataPropertyName = "Aircrafttype";
+            AircrafttypeColumn.HeaderText = "Тип самолёта";
+            AircrafttypeColumn.Name = "AircrafttypeColumn";
+            // 
+            // FlightnumberColumn
+            // 
+            FlightnumberColumn.DataPropertyName = "Flightnumber";
+            FlightnumberColumn.HeaderText = "Номер рейса";
+            FlightnumberColumn.Name = "FlightnumberColumn";
             // 
             // MainForm
             // 
@@ -206,6 +216,7 @@
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewflights).EndInit();
+            ((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -222,6 +233,7 @@
         private ToolStripStatusLabel toolStripStatusLabelTotalrevenue;
         private ToolStripButton toolStripButtonEditing;
         private ToolStripButton toolStripButtonDelete;
+        private ErrorProvider errorProvider;
         private DataGridViewTextBoxColumn FlightnumberColumn;
         private DataGridViewTextBoxColumn AircrafttypeColumn;
         private DataGridViewTextBoxColumn ArrivaltimeColumn;

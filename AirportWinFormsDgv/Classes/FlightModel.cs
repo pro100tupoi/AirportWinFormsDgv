@@ -21,51 +21,61 @@ namespace AirportWinFormsDgv.Classes
         /// <summary>
         /// Номер рейса
         /// </summary>
-        [Required]
-        [StringLength(255)]
+        [Display(Name = "Номер рейса")]
+        [Required(ErrorMessage = "{0} обязателен для заполнения")]
+        [StringLength(255, ErrorMessage = "{0} должен быть не более {1} символов")]
         public string Flightnumber { get; set; } = string.Empty;
 
         /// <inheritdoc cref="Classes.Aircrafttype"/>
+        [Display(Name = "Тип воздушного судна")]
         public Aircrafttype Aircrafttype { get; set; }
 
         /// <summary>
         /// Время прибытия
         /// </summary>
+        [Display(Name = "Время прибытия")]
         public DateTime Arrivaltime { get; set; }
 
         /// <summary>
         /// Количество пассажиров
         /// </summary>
-        [Range(0, 255)]
+        [Display(Name = "Количество пассажиров")]
+        [Range(0, 255, ErrorMessage = "{0} должно быть от {1} до {2}")]
         public int Numberofpassengers { get; set; }
 
         /// <summary>
         /// Сбор на пассажира
         /// </summary>
-        [Range(0, 5000)]
+        [Display(Name = "Сбор на пассажира")]
+        [Range(0, 5000, ErrorMessage = "{0} должен быть от {1} до {2}")]
         public decimal Taxperpassenger { get; set; }
 
         /// <summary>
         /// Количество экипажа
         /// </summary>
-        [Range(0, 50)]
+        [Display(Name = "Количество экипажа")]
+        [Range(0, 50, ErrorMessage = "{0} должно быть от {1} до {2}")]
         public int Numberofcrew { get; set; }
 
         /// <summary>
         /// Сбор на экипаж
         /// </summary>
-        [Range(0, 1000)]
+        [Display(Name = "Сбор на экипаж")]
+        [Range(0, 1000, ErrorMessage = "{0} должен быть от {1} до {2}")]
         public decimal Taxpercrew { get; set; }
 
         /// <summary>
         /// Процент надбавки за обслуживание
         /// </summary>
-        [Range(0, 100)]
+        [Display(Name = "Процент надбавки за обслуживание")]
+        [Range(0, 100, ErrorMessage = "{0} должен быть от {1} до {2}")]
         public decimal Servicepercentage { get; set; }
 
         /// <summary>
         /// Выручка ((пассажиры * сбор + экипаж * сбор) + процент надбавки
         /// </summary>
-        public decimal Revenue { get; set; }
+        [Display(Name = "Выручка")]
+        public decimal Revenue =>
+            (Numberofpassengers * Taxperpassenger + Numberofcrew * Taxpercrew) + Servicepercentage;
     }
 }

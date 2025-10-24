@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AirportWinFormsDgv.Classes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 // using static System.Windows.Forms.VisualStyles.VisualStyleElement; // <-- Не используется, можно удалить
 // using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button; // <-- Не используется, можно удалить
 
@@ -31,10 +34,8 @@ namespace AirportWinFormsDgv.Forms
                     Taxperpassenger = sourceflight.Taxperpassenger,
                     Numberofcrew = sourceflight.Numberofcrew,
                     Taxpercrew = sourceflight.Taxpercrew,
-                    Servicepercentage = sourceflight.Servicepercentage,
-                    Revenue = sourceflight.Revenue
+                    Servicepercentage = sourceflight.Servicepercentage
                 };
-                buttonAdd.Text = "Сохранить";
             }
             else
             {
@@ -49,51 +50,38 @@ namespace AirportWinFormsDgv.Forms
                     Taxperpassenger = 0,
                     Numberofcrew = 0,
                     Taxpercrew = 0,
-                    Servicepercentage = 0,
-                    Revenue = 0
+                    Servicepercentage = 0
                 };
             }
 
             InitializeComponent();
 
+            if (sourceflight != null)
+            {
+                buttonAdd.Text = "Сохранить";
+            }
+
             // Настройка привязки данных
             comboBoxAircrafttype.DataSource = Enum.GetValues(typeof(Aircrafttype));
-            comboBoxAircrafttype.AddBinding(x => x.SelectedItem, targetflight, x => x.Aircrafttype);
-            textBoxFlightnumber.AddBinding(x => x.Text, targetflight, x => x.Flightnumber);
 
-            var dateTimePickerBinding = new Binding("Value", targetflight, "Arrivaltime");
-            dateTimePickerBinding.Format += new ConvertEventHandler(DateOnlyToDateTime!);
-            dateTimePickerBinding.Parse += new ConvertEventHandler(DateTimeToDateOnly!);
-            dateTimePickerArrivaltime.DataBindings.Add(dateTimePickerBinding);
-
-            numericUpDownNumberofpassengers.AddBinding(x => x.Value, targetflight, x => x.Numberofpassengers);
-            numericUpDownNumberofpassengers.ValueChanged += (s, e) => UpdateRevenueAndBindingSource();
-
-            numericUpDownTaxperpassenger.AddBinding(x => x.Value, targetflight, x => x.Taxperpassenger); // Уже было, но оставим для полноты
-            numericUpDownTaxperpassenger.ValueChanged += (s, e) => UpdateRevenueAndBindingSource();
-
-            numericUpDownNumberofcrew.AddBinding(x => x.Value, targetflight, x => x.Numberofcrew);
-            numericUpDownNumberofcrew.ValueChanged += (s, e) => UpdateRevenueAndBindingSource();
-
-            numericUpDownTaxpercrew.AddBinding(x => x.Value, targetflight, x => x.Taxpercrew);
-            numericUpDownTaxpercrew.ValueChanged += (s, e) => UpdateRevenueAndBindingSource();
-
-            numericUpDownServicepercentage.AddBinding(x => x.Value, targetflight, x => x.Servicepercentage);
-            numericUpDownServicepercentage.ValueChanged += (s, e) => UpdateRevenueAndBindingSource();
-
-            UpdateRevenueAndBindingSource();
+            //var dateTimePickerBinding = new Binding("Value", targetflight, "Arrivaltime");
+            //dateTimePickerBinding.Format += new ConvertEventHandler(DateOnlyToDateTime!);
+            //dateTimePickerBinding.Parse += new ConvertEventHandler(DateTimeToDateOnly!);
+            //dateTimePickerArrivaltime.DataBindings.Add(dateTimePickerBinding);
+            comboBoxAircrafttype.AddBinding(x => x.SelectedItem, targetflight, x => x.Aircrafttype, errorProvider);
+            textBoxFlightnumber.AddBinding(x => x.Text, targetflight, x => x.Flightnumber, errorProvider);
+            dateTimePickerArrivaltime.AddBinding(x => x.Value, targetflight, x => x.Arrivaltime, errorProvider);
+            numericUpDownNumberofpassengers.AddBinding(x => x.Value, targetflight, x => x.Numberofpassengers, errorProvider);
+            numericUpDownTaxperpassenger.AddBinding(x => x.Value, targetflight, x => x.Taxperpassenger, errorProvider);
+            numericUpDownNumberofcrew.AddBinding(x => x.Value, targetflight, x => x.Numberofcrew, errorProvider);
+            numericUpDownTaxpercrew.AddBinding(x => x.Value, targetflight, x => x.Taxpercrew, errorProvider);
+            numericUpDownServicepercentage.AddBinding(x => x.Value, targetflight, x => x.Servicepercentage, errorProvider);
         }
 
         /// <summary>
-        /// Возвращает текущий объект FlightModel, созданный или изменённый в этой форме.
+        /// Возвращает текущий объект FlightModel, созданный или изменённый в этой форме
         /// </summary>
         public FlightModel CurrentFlight => targetflight;
-
-        private void UpdateRevenueAndBindingSource()
-        {
-            FlightCalculator.UpdateRevenue(targetflight);
-            // bindingSource.ResetBindings(false);
-        }
 
         private void DateOnlyToDateTime(object sender, ConvertEventArgs e)
         {
@@ -115,15 +103,88 @@ namespace AirportWinFormsDgv.Forms
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            UpdateRevenueAndBindingSource();
-            DialogResult = DialogResult.OK;
-            Close();
+            errorProvider.Clear();
+
+            var context = new ValidationContext(targetflight);
+            var results = new System.Collections.Generic.List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(targetflight, context, results, true);
+
+            if (isValid)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+            {
+                foreach (var validationResult in results)
+                {
+                    foreach (string memberName in validationResult.MemberNames)
+                    {
+                        Control? control = memberName switch
+                        {
+                            nameof(FlightModel.Flightnumber) => textBoxFlightnumber,
+                            nameof(FlightModel.Aircrafttype) => comboBoxAircrafttype,
+                            nameof(FlightModel.Arrivaltime) => dateTimePickerArrivaltime,
+                            nameof(FlightModel.Numberofpassengers) => numericUpDownNumberofpassengers,
+                            nameof(FlightModel.Taxperpassenger) => numericUpDownTaxperpassenger,
+                            nameof(FlightModel.Numberofcrew) => numericUpDownNumberofcrew,
+                            nameof(FlightModel.Taxpercrew) => numericUpDownTaxpercrew,
+                            nameof(FlightModel.Servicepercentage) => numericUpDownServicepercentage,
+                            _ => null
+                        };
+
+                        if (control != null)
+                        {
+                            errorProvider.SetError(control, validationResult.ErrorMessage);
+                        }
+                    }
+                }
+            }
         }
 
         private void buttonEscape_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void comboBoxAircrafttype_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index >= 0)
+            {
+                e.DrawBackground();
+                e.DrawFocusRectangle();
+                var value = comboBoxAircrafttype.Items[e.Index];
+                if (value is Aircrafttype aircrafttypeValue)
+                {
+                    var valueString = string.Empty;
+                    switch (aircrafttypeValue)
+                    {
+                        case Aircrafttype.Airbus:
+                            valueString = "Эйрбас";
+                            break;
+                        case Aircrafttype.UAC:
+                            valueString = "ОАК";
+                            break;
+                        case Aircrafttype.Boeing:
+                            valueString = "Боенг";
+                            break;
+                        case Aircrafttype.Unknown:
+                            valueString = "Неизвестно";
+                            break;
+                        default:
+                            valueString = "-";
+                            break;
+                    }
+                    var brush = SystemBrushes.ControlText;
+                    if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                    {
+                        brush = SystemBrushes.HighlightText;
+                    }
+                    e.Graphics.DrawString(valueString, e.Font!, brush,
+                       new Rectangle(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height));
+                }
+            }
         }
     }
 }

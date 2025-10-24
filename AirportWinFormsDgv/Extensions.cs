@@ -54,7 +54,6 @@ namespace AirportWinFormsDgv
             if (body is MemberExpression memberExpression)
             {
                 return memberExpression.Member.Name;
-                //MemberExpression member = (MemberExpression)body;
             }
 
             throw new ArgumentException("Expression must be a property access.", nameof(expression));

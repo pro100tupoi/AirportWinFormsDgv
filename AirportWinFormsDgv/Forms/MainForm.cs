@@ -22,15 +22,7 @@ namespace AirportWinFormsDgv
                 Taxperpassenger = 250.50m,
                 Numberofcrew = 8,
                 Taxpercrew = 120.75m,
-                Servicepercentage = 15.5m,
-                Revenue = FlightCalculator.CalculateRevenue(new FlightModel
-                {
-                    Numberofpassengers = 150,
-                    Taxperpassenger = 250.50m,
-                    Numberofcrew = 8,
-                    Taxpercrew = 120.75m,
-                    Servicepercentage = 15.5m
-                })
+                Servicepercentage = 15.5m
             });
             items.Add(new FlightModel
             {
@@ -42,15 +34,7 @@ namespace AirportWinFormsDgv
                 Taxperpassenger = 180.00m,
                 Numberofcrew = 6,
                 Taxpercrew = 100.25m,
-                Servicepercentage = 12.0m,
-                Revenue = FlightCalculator.CalculateRevenue(new FlightModel
-                {
-                    Numberofpassengers = 85,
-                    Taxperpassenger = 180.00m,
-                    Numberofcrew = 6,
-                    Taxpercrew = 100.25m,
-                    Servicepercentage = 12.0m
-                })
+                Servicepercentage = 12.0m
             });
             InitializeComponent();
             SetStatistic();
@@ -102,10 +86,9 @@ namespace AirportWinFormsDgv
             if (addForm.ShowDialog(this) == DialogResult.OK)
             {
                 items.Add(addForm.CurrentFlight);
-                bindingSource.ResetBindings(false);
                 //dataGridViewflights.DataSource = null;
                 //dataGridViewflights.DataSource = items;
-                SetStatistic();
+                Vadim_GAY();
             }
         }
 
@@ -131,9 +114,7 @@ namespace AirportWinFormsDgv
                     target.Numberofcrew = addForm.CurrentFlight.Numberofcrew;
                     target.Taxpercrew = addForm.CurrentFlight.Taxpercrew;
                     target.Servicepercentage = addForm.CurrentFlight.Servicepercentage;
-                    target.Revenue = addForm.CurrentFlight.Revenue;
-                    bindingSource.ResetBindings(false);
-                    SetStatistic();
+                    Vadim_GAY();
                 }
             }
         }
@@ -151,8 +132,7 @@ namespace AirportWinFormsDgv
                 == DialogResult.Yes)
             {
                 items.Remove(target);
-                bindingSource.ResetBindings(false);
-                SetStatistic();
+                Vadim_GAY();
             }
         }
 
@@ -178,6 +158,12 @@ namespace AirportWinFormsDgv
             toolStripStatusLabelTotalnumberofpassengers.Text = $"общее количество пассажиров: {totalPassengers}";
             var totalRevenue = items.Sum(flight => flight.Revenue);
             toolStripStatusLabelTotalrevenue.Text = $"сумма всей выручки: {totalRevenue:F2}";
+        }
+
+        private void Vadim_GAY()
+        {
+            bindingSource.ResetBindings(false);
+            SetStatistic();
         }
     }
 }
