@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.ComponentModel.DataAnnotations;
+using AirportWinFormsDgv.Constants;
 
 namespace AirportWinFormsDgv.Classes
 {
@@ -23,7 +18,7 @@ namespace AirportWinFormsDgv.Classes
         /// </summary>
         [Display(Name = "Номер рейса")]
         [Required(ErrorMessage = "{0} обязателен для заполнения")]
-        [StringLength(255, ErrorMessage = "{0} должен быть не более {1} символов")]
+        [StringLength(VadimConstants.FlightNumberMaxLength, ErrorMessage = "{0} должен быть не более {1} символов")]
         public string Flightnumber { get; set; } = string.Empty;
 
         /// <inheritdoc cref="Classes.Aircrafttype"/>
@@ -40,35 +35,35 @@ namespace AirportWinFormsDgv.Classes
         /// Количество пассажиров
         /// </summary>
         [Display(Name = "Количество пассажиров")]
-        [Range(0, 255, ErrorMessage = "{0} должно быть от {1} до {2}")]
+        [Range(VadimConstants.NumberOfPassengersMin, VadimConstants.NumberOfPassengersMax, ErrorMessage = "{0} должно быть от {1} до {2}")]
         public int Numberofpassengers { get; set; }
 
         /// <summary>
         /// Сбор на пассажира
         /// </summary>
         [Display(Name = "Сбор на пассажира")]
-        [Range(0, 5000, ErrorMessage = "{0} должен быть от {1} до {2}")]
+        [Range(VadimConstants.TaxPerPassengerMin, VadimConstants.TaxPerPassengerMax, ErrorMessage = "{0} должен быть от {1} до {2}")]
         public decimal Taxperpassenger { get; set; }
 
         /// <summary>
         /// Количество экипажа
         /// </summary>
         [Display(Name = "Количество экипажа")]
-        [Range(0, 50, ErrorMessage = "{0} должно быть от {1} до {2}")]
+        [Range(VadimConstants.NumberOfCrewMin, VadimConstants.NumberOfCrewMax, ErrorMessage = "{0} должно быть от {1} до {2}")]
         public int Numberofcrew { get; set; }
 
         /// <summary>
         /// Сбор на экипаж
         /// </summary>
         [Display(Name = "Сбор на экипаж")]
-        [Range(0, 1000, ErrorMessage = "{0} должен быть от {1} до {2}")]
+        [Range(VadimConstants.TaxPerCrewMin, VadimConstants.TaxPerCrewMax, ErrorMessage = "{0} должен быть от {1} до {2}")]
         public decimal Taxpercrew { get; set; }
 
         /// <summary>
         /// Процент надбавки за обслуживание
         /// </summary>
         [Display(Name = "Процент надбавки за обслуживание")]
-        [Range(0, 100, ErrorMessage = "{0} должен быть от {1} до {2}")]
+        [Range(VadimConstants.ServicePercentageMin, VadimConstants.ServicePercentageMax, ErrorMessage = "{0} должен быть от {1} до {2}")]
         public decimal Servicepercentage { get; set; }
 
         /// <summary>

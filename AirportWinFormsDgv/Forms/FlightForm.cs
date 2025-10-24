@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.ComponentModel.DataAnnotations;
 using AirportWinFormsDgv.Classes;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-// using static System.Windows.Forms.VisualStyles.VisualStyleElement; // <-- Не используется, можно удалить
-// using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button; // <-- Не используется, можно удалить
 
 namespace AirportWinFormsDgv.Forms
 {
@@ -55,6 +42,7 @@ namespace AirportWinFormsDgv.Forms
             }
 
             InitializeComponent();
+            comboBoxAircrafttype.DrawMode = DrawMode.OwnerDrawFixed;
 
             if (sourceflight != null)
             {
@@ -64,10 +52,6 @@ namespace AirportWinFormsDgv.Forms
             // Настройка привязки данных
             comboBoxAircrafttype.DataSource = Enum.GetValues(typeof(Aircrafttype));
 
-            //var dateTimePickerBinding = new Binding("Value", targetflight, "Arrivaltime");
-            //dateTimePickerBinding.Format += new ConvertEventHandler(DateOnlyToDateTime!);
-            //dateTimePickerBinding.Parse += new ConvertEventHandler(DateTimeToDateOnly!);
-            //dateTimePickerArrivaltime.DataBindings.Add(dateTimePickerBinding);
             comboBoxAircrafttype.AddBinding(x => x.SelectedItem, targetflight, x => x.Aircrafttype, errorProvider);
             textBoxFlightnumber.AddBinding(x => x.Text, targetflight, x => x.Flightnumber, errorProvider);
             dateTimePickerArrivaltime.AddBinding(x => x.Value, targetflight, x => x.Arrivaltime, errorProvider);
@@ -82,24 +66,6 @@ namespace AirportWinFormsDgv.Forms
         /// Возвращает текущий объект FlightModel, созданный или изменённый в этой форме
         /// </summary>
         public FlightModel CurrentFlight => targetflight;
-
-        private void DateOnlyToDateTime(object sender, ConvertEventArgs e)
-        {
-            // Проверка на null и тип e.Value
-            if (e.DesiredType == typeof(DateTime) && e.Value is DateOnly dateOnlyValue)
-            {
-                e.Value = dateOnlyValue.ToDateTime(TimeOnly.MinValue);
-            }
-        }
-
-        private void DateTimeToDateOnly(object sender, ConvertEventArgs e)
-        {
-            // Проверка на null и тип e.Value
-            if (e.DesiredType == typeof(DateOnly) && e.Value is DateTime dateTimeValue)
-            {
-                e.Value = DateOnly.FromDateTime(dateTimeValue);
-            }
-        }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
