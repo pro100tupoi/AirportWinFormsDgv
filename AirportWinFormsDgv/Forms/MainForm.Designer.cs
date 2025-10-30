@@ -40,16 +40,16 @@
             toolStripButtonEditing = new ToolStripButton();
             toolStripButtonDelete = new ToolStripButton();
             dataGridViewflights = new DataGridView();
-            errorProvider = new ErrorProvider(components);
-            RevenueColumn = new DataGridViewTextBoxColumn();
-            ServicepercentageColumn = new DataGridViewTextBoxColumn();
-            TaxpercrewColumn = new DataGridViewTextBoxColumn();
-            NumberofcrewColumn = new DataGridViewTextBoxColumn();
-            TaxperpassengerColumn = new DataGridViewTextBoxColumn();
-            NumberofpassengersColumn = new DataGridViewTextBoxColumn();
-            ArrivaltimeColumn = new DataGridViewTextBoxColumn();
-            AircrafttypeColumn = new DataGridViewTextBoxColumn();
             FlightnumberColumn = new DataGridViewTextBoxColumn();
+            AircrafttypeColumn = new DataGridViewTextBoxColumn();
+            ArrivaltimeColumn = new DataGridViewTextBoxColumn();
+            NumberofpassengersColumn = new DataGridViewTextBoxColumn();
+            TaxperpassengerColumn = new DataGridViewTextBoxColumn();
+            NumberofcrewColumn = new DataGridViewTextBoxColumn();
+            TaxpercrewColumn = new DataGridViewTextBoxColumn();
+            ServicepercentageColumn = new DataGridViewTextBoxColumn();
+            RevenueColumn = new DataGridViewTextBoxColumn();
+            errorProvider = new ErrorProvider(components);
             statusStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewflights).BeginInit();
@@ -133,73 +133,85 @@
             // 
             // dataGridViewflights
             // 
+            dataGridViewflights.AllowUserToAddRows = false;
+            dataGridViewflights.AllowUserToDeleteRows = false;
             dataGridViewflights.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewflights.Columns.AddRange(new DataGridViewColumn[] { FlightnumberColumn, AircrafttypeColumn, ArrivaltimeColumn, NumberofpassengersColumn, TaxperpassengerColumn, NumberofcrewColumn, TaxpercrewColumn, ServicepercentageColumn, RevenueColumn });
             dataGridViewflights.Dock = DockStyle.Fill;
             dataGridViewflights.Location = new Point(0, 25);
             dataGridViewflights.Name = "dataGridViewflights";
+            dataGridViewflights.ReadOnly = true;
             dataGridViewflights.Size = new Size(943, 403);
             dataGridViewflights.TabIndex = 2;
             dataGridViewflights.CellContentClick += dataGridViewflights_CellContentClick;
             dataGridViewflights.CellFormatting += dataGridViewflights_CellFormatting;
-            // 
-            // errorProvider
-            // 
-            errorProvider.ContainerControl = this;
-            // 
-            // RevenueColumn
-            // 
-            RevenueColumn.DataPropertyName = "Revenue";
-            RevenueColumn.HeaderText = "Выручка";
-            RevenueColumn.Name = "RevenueColumn";
-            // 
-            // ServicepercentageColumn
-            // 
-            ServicepercentageColumn.DataPropertyName = "Servicepercentage";
-            ServicepercentageColumn.HeaderText = "Процент надбавки за обслуживание";
-            ServicepercentageColumn.Name = "ServicepercentageColumn";
-            // 
-            // TaxpercrewColumn
-            // 
-            TaxpercrewColumn.DataPropertyName = "Taxpercrew";
-            TaxpercrewColumn.HeaderText = "Сбор на экипаж";
-            TaxpercrewColumn.Name = "TaxpercrewColumn";
-            // 
-            // NumberofcrewColumn
-            // 
-            NumberofcrewColumn.DataPropertyName = "Numberofcrew";
-            NumberofcrewColumn.HeaderText = "Количество экипажа";
-            NumberofcrewColumn.Name = "NumberofcrewColumn";
-            // 
-            // TaxperpassengerColumn
-            // 
-            TaxperpassengerColumn.DataPropertyName = "Taxperpassenger";
-            TaxperpassengerColumn.HeaderText = "Сбор на пассажира";
-            TaxperpassengerColumn.Name = "TaxperpassengerColumn";
-            // 
-            // NumberofpassengersColumn
-            // 
-            NumberofpassengersColumn.DataPropertyName = "Numberofpassengers";
-            NumberofpassengersColumn.HeaderText = "Количество пассажиров";
-            NumberofpassengersColumn.Name = "NumberofpassengersColumn";
-            // 
-            // ArrivaltimeColumn
-            // 
-            ArrivaltimeColumn.DataPropertyName = "Arrivaltime";
-            ArrivaltimeColumn.HeaderText = "Время прибытия";
-            ArrivaltimeColumn.Name = "ArrivaltimeColumn";
-            // 
-            // AircrafttypeColumn
-            // 
-            AircrafttypeColumn.DataPropertyName = "Aircrafttype";
-            AircrafttypeColumn.HeaderText = "Тип самолёта";
-            AircrafttypeColumn.Name = "AircrafttypeColumn";
             // 
             // FlightnumberColumn
             // 
             FlightnumberColumn.DataPropertyName = "Flightnumber";
             FlightnumberColumn.HeaderText = "Номер рейса";
             FlightnumberColumn.Name = "FlightnumberColumn";
+            FlightnumberColumn.ReadOnly = true;
+            // 
+            // AircrafttypeColumn
+            // 
+            AircrafttypeColumn.DataPropertyName = "Aircrafttype";
+            AircrafttypeColumn.HeaderText = "Тип самолёта";
+            AircrafttypeColumn.Name = "AircrafttypeColumn";
+            AircrafttypeColumn.ReadOnly = true;
+            // 
+            // ArrivaltimeColumn
+            // 
+            ArrivaltimeColumn.DataPropertyName = "Arrivaltime";
+            ArrivaltimeColumn.HeaderText = "Время прибытия";
+            ArrivaltimeColumn.Name = "ArrivaltimeColumn";
+            ArrivaltimeColumn.ReadOnly = true;
+            // 
+            // NumberofpassengersColumn
+            // 
+            NumberofpassengersColumn.DataPropertyName = "Numberofpassengers";
+            NumberofpassengersColumn.HeaderText = "Количество пассажиров";
+            NumberofpassengersColumn.Name = "NumberofpassengersColumn";
+            NumberofpassengersColumn.ReadOnly = true;
+            // 
+            // TaxperpassengerColumn
+            // 
+            TaxperpassengerColumn.DataPropertyName = "Taxperpassenger";
+            TaxperpassengerColumn.HeaderText = "Сбор на пассажира";
+            TaxperpassengerColumn.Name = "TaxperpassengerColumn";
+            TaxperpassengerColumn.ReadOnly = true;
+            // 
+            // NumberofcrewColumn
+            // 
+            NumberofcrewColumn.DataPropertyName = "Numberofcrew";
+            NumberofcrewColumn.HeaderText = "Количество экипажа";
+            NumberofcrewColumn.Name = "NumberofcrewColumn";
+            NumberofcrewColumn.ReadOnly = true;
+            // 
+            // TaxpercrewColumn
+            // 
+            TaxpercrewColumn.DataPropertyName = "Taxpercrew";
+            TaxpercrewColumn.HeaderText = "Сбор на экипаж";
+            TaxpercrewColumn.Name = "TaxpercrewColumn";
+            TaxpercrewColumn.ReadOnly = true;
+            // 
+            // ServicepercentageColumn
+            // 
+            ServicepercentageColumn.DataPropertyName = "Servicepercentage";
+            ServicepercentageColumn.HeaderText = "Процент надбавки за обслуживание";
+            ServicepercentageColumn.Name = "ServicepercentageColumn";
+            ServicepercentageColumn.ReadOnly = true;
+            // 
+            // RevenueColumn
+            // 
+            RevenueColumn.DataPropertyName = "Revenue";
+            RevenueColumn.HeaderText = "Выручка";
+            RevenueColumn.Name = "RevenueColumn";
+            RevenueColumn.ReadOnly = true;
+            // 
+            // errorProvider
+            // 
+            errorProvider.ContainerControl = this;
             // 
             // MainForm
             // 

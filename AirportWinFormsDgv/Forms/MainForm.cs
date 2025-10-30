@@ -1,12 +1,18 @@
-using AirportWinFormsDgv.Classes;
+п»їusing AirportWinFormsDgv.Classes;
 using AirportWinFormsDgv.Forms;
 
 namespace AirportWinFormsDgv
 {
+    /// <summary>
+    /// Р“Р»Р°РІРЅР°СЏ С„РѕСЂРјР° РїСЂРёР»РѕР¶РµРЅРёСЏ
+    /// </summary>
     public partial class MainForm : Form
     {
         private readonly List<FlightModel> items;
         private readonly BindingSource bindingSource = new();
+        /// <summary>
+        /// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РіР»Р°РІРЅСѓСЋ С„РѕСЂРјСѓ
+        /// </summary>
         public MainForm()
         {
             items = new List<FlightModel>();
@@ -44,31 +50,31 @@ namespace AirportWinFormsDgv
 
         private void dataGridViewflights_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Проверка индекса строки
-            // Убедимся, что индекс строки действителен и не превышает количество строк в DataSource
-            if (e.RowIndex < 0 || e.RowIndex >= dataGridViewflights.RowCount - 1) // -1 если AllowUserToAddRows = true и последняя строка - для добавления
+            // РџСЂРѕРІРµСЂРєР° РёРЅРґРµРєСЃР° СЃС‚СЂРѕРєРё
+            // РЈР±РµРґРёРјСЃСЏ, С‡С‚Рѕ РёРЅРґРµРєСЃ СЃС‚СЂРѕРєРё РґРµР№СЃС‚РІРёС‚РµР»РµРЅ Рё РЅРµ РїСЂРµРІС‹С€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє РІ DataSource
+            if (e.RowIndex < 0 || e.RowIndex >= dataGridViewflights.RowCount - 1) // -1 РµСЃР»Рё AllowUserToAddRows = true Рё РїРѕСЃР»РµРґРЅСЏСЏ СЃС‚СЂРѕРєР° - РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ
             {
                 return;
             }
 
             var col = dataGridViewflights.Columns[e.ColumnIndex];
 
-            // Проверяем, что DataBoundItem не null перед приведением типа
+            // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ DataBoundItem РЅРµ null РїРµСЂРµРґ РїСЂРёРІРµРґРµРЅРёРµРј С‚РёРїР°
             var dataBoundItem = dataGridViewflights.Rows[e.RowIndex].DataBoundItem;
             if (col != null && col.DataPropertyName == nameof(FlightModel.Aircrafttype) && dataBoundItem is FlightModel airplane)
             {
                 switch (airplane.Aircrafttype)
                 {
                     case Aircrafttype.Airbus:
-                        e.Value = "Эйрбас";
+                        e.Value = "Р­Р№СЂР±Р°СЃ";
                         e.FormattingApplied = true;
                         break;
-                    case Aircrafttype.UAC:
-                        e.Value = "ОАК";
+                    case Aircrafttype.UnitedAircraftCorporation:
+                        e.Value = "РћРђРљ";
                         e.FormattingApplied = true;
                         break;
                     case Aircrafttype.Boeing:
-                        e.Value = "Боинг";
+                        e.Value = "Р‘РѕРёРЅРі";
                         e.FormattingApplied = true;
                         break;
                     default:
@@ -85,9 +91,7 @@ namespace AirportWinFormsDgv
             if (addForm.ShowDialog(this) == DialogResult.OK)
             {
                 items.Add(addForm.CurrentFlight);
-                //dataGridViewflights.DataSource = null;
-                //dataGridViewflights.DataSource = items;
-                Vadim_GAY();
+                RefreshDisplay();
             }
         }
 
@@ -113,7 +117,7 @@ namespace AirportWinFormsDgv
                     target.Numberofcrew = addForm.CurrentFlight.Numberofcrew;
                     target.Taxpercrew = addForm.CurrentFlight.Taxpercrew;
                     target.Servicepercentage = addForm.CurrentFlight.Servicepercentage;
-                    Vadim_GAY();
+                    RefreshDisplay();
                 }
             }
         }
@@ -127,39 +131,41 @@ namespace AirportWinFormsDgv
 
             var flight = (FlightModel)dataGridViewflights.SelectedRows[0].DataBoundItem;
             var target = items.FirstOrDefault(x => x.Id == flight.Id);
-            if (target != null && MessageBox.Show($"Вы действительно хотите удалить '{target.Flightnumber}' ?", "Удаление рейса", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            if (target != null && MessageBox.Show($"Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ '{target.Flightnumber}' ?", "РЈРґР°Р»РµРЅРёРµ СЂРµР№СЃР°", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 == DialogResult.Yes)
             {
                 items.Remove(target);
-                Vadim_GAY();
+                RefreshDisplay();
             }
         }
 
         private void dataGridViewflights_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridViewflights.SelectedRows.Count == 0)
-            { return; }
+            {
+                return;
+            }
 
             var flight = (FlightModel)dataGridViewflights.SelectedRows[0].DataBoundItem;
-            var FlightForm = new FlightForm();
-            if (FlightForm.ShowDialog(this) == DialogResult.OK)
+            var flightForm = new FlightForm();
+            if (flightForm.ShowDialog(this) == DialogResult.OK)
             {
-                flight.Flightnumber = FlightForm.CurrentFlight.Flightnumber;
+                flight.Flightnumber = flightForm.CurrentFlight.Flightnumber;
             }
         }
 
         private void SetStatistic()
         {
-            toolStripStatusLabelArrivingflights.Text = $"прибывающих рейсов:  {items.Count}";
+            toolStripStatusLabelArrivingflights.Text = $"РїСЂРёР±С‹РІР°СЋС‰РёС… СЂРµР№СЃРѕРІ:  {items.Count}";
             var totalCrew = items.Sum(flight => flight.Numberofcrew);
-            toolStripStatusLabelTotalnumberofcrew.Text = $"общее количество экипажа: {totalCrew}";
+            toolStripStatusLabelTotalnumberofcrew.Text = $"РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌРєРёРїР°Р¶Р°: {totalCrew}";
             var totalPassengers = items.Sum(flight => flight.Numberofpassengers);
-            toolStripStatusLabelTotalnumberofpassengers.Text = $"общее количество пассажиров: {totalPassengers}";
+            toolStripStatusLabelTotalnumberofpassengers.Text = $"РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїР°СЃСЃР°Р¶РёСЂРѕРІ: {totalPassengers}";
             var totalRevenue = items.Sum(flight => flight.Revenue);
-            toolStripStatusLabelTotalrevenue.Text = $"сумма всей выручки: {totalRevenue:F2}";
+            toolStripStatusLabelTotalrevenue.Text = $"СЃСѓРјРјР° РІСЃРµР№ РІС‹СЂСѓС‡РєРё: {totalRevenue:F2}";
         }
 
-        private void Vadim_GAY()
+        private void RefreshDisplay()
         {
             bindingSource.ResetBindings(false);
             SetStatistic();

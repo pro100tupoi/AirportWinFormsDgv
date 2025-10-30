@@ -3,8 +3,21 @@ using System.Linq.Expressions;
 
 namespace AirportWinFormsDgv
 {
+    /// <summary>
+    /// Методы расширения для упрощения привязки данных
+    /// </summary>
     public static class Extensions
     {
+        /// <summary>
+        /// Привязывает свойство контрола к свойству источника данных
+        /// </summary>
+        /// <typeparam name="TControl">Тип элемента управления (должен наследоваться от <see cref="Control"/>).</typeparam>
+        /// <typeparam name="TSource">Тип источника данных (должен быть ссылочным типом).</typeparam>
+        /// <param name="control">Элемент управления, к которому применяется привязка.</param>
+        /// <param name="destinationProperty">Лямбда-выражение, указывающее свойство элемента управления.</param>
+        /// <param name="source">Объект-источник данных.</param>
+        /// <param name="sourceProperty">Лямбда-выражение, указывающее свойство источника данных.</param>
+        /// <param name="errorProvider">Провайдер отображения ошибок валидации (опционально).</param>
         public static void AddBinding<TControl, TSource>(this TControl control,
             Expression<Func<TControl, object>> destinationProperty,
             TSource source,
@@ -14,33 +27,20 @@ namespace AirportWinFormsDgv
             where TControl : Control
             where TSource : class
         {
-            var destProName = GetPropertyName(destinationProperty);
-            var sourceProName = GetPropertyName(sourceProperty);
-            var binding = new Binding(destProName, source, sourceProName);
-            control.DataBindings.Add(destProName, source, sourceProName);
+            var destName = GetPropertyName(destinationProperty);
+            var srcName = GetPropertyName(sourceProperty);
 
-            if (errorProvider != null)
+            if (control.DataBindings[destName] != null)
             {
-                var context = new ValidationContext(source);
-                var results = new List<ValidationResult>();
-                if (!Validator.TryValidateObject(source, context, results, true))
-                {
-                    var propError = results.FirstOrDefault(x => x.MemberNames.Contains(sourceProName));
-                    if (propError != null)
-                    {
-                        errorProvider.SetError(control, "error");
-                    }
-                }
-                else
-                {
-                    errorProvider.SetError(control, string.Empty);
-                }
+                control.DataBindings.Remove(control.DataBindings[destName]);
             }
+
+            control.DataBindings.Add(destName, source, srcName, false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
-        static string GetPropertyName<TType>(Expression<Func<TType, object>> expression)
+        private static string GetPropertyName<TType>(Expression<Func<TType, object>> expression)
         {
-            Expression body = expression.Body;
+            var body = expression.Body;
             if (body.NodeType == ExpressionType.Convert)
             {
                 body = ((UnaryExpression)body).Operand;
@@ -51,7 +51,7 @@ namespace AirportWinFormsDgv
                 return memberExpression.Member.Name;
             }
 
-            throw new ArgumentException("Expression must be a property access.", nameof(expression));
+            throw new ArgumentException($"Выражение должно быть доступом к свойству {nameof(expression)}");
         }
     }
 }

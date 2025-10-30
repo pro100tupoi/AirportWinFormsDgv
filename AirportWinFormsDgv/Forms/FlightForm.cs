@@ -1,12 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AirportWinFormsDgv.Classes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AirportWinFormsDgv.Forms
 {
+    /// <summary>
+    /// Форма добавления или редактирования рейса
+    /// </summary>
     public partial class FlightForm : Form
     {
         private readonly FlightModel targetflight;
 
+        /// <summary>
+        /// Создаёт форму добавления или редактирования рейса
+        /// </summary>
+        /// <param name="sourceflight"></param>
         public FlightForm(FlightModel? sourceflight = null)
         {
             if (sourceflight != null)
@@ -73,7 +81,7 @@ namespace AirportWinFormsDgv.Forms
 
             var context = new ValidationContext(targetflight);
             var results = new System.Collections.Generic.List<ValidationResult>();
-            bool isValid = Validator.TryValidateObject(targetflight, context, results, true);
+            var isValid = Validator.TryValidateObject(targetflight, context, results, true);
 
             if (isValid)
             {
@@ -82,15 +90,14 @@ namespace AirportWinFormsDgv.Forms
             }
             else
             {
-                foreach (var validationResult in results)
+                foreach (var error in results)
                 {
-                    foreach (string memberName in validationResult.MemberNames)
+                    foreach (var memberName in error.MemberNames)
                     {
                         Control? control = memberName switch
                         {
                             nameof(FlightModel.Flightnumber) => textBoxFlightnumber,
                             nameof(FlightModel.Aircrafttype) => comboBoxAircrafttype,
-                            nameof(FlightModel.Arrivaltime) => dateTimePickerArrivaltime,
                             nameof(FlightModel.Numberofpassengers) => numericUpDownNumberofpassengers,
                             nameof(FlightModel.Taxperpassenger) => numericUpDownTaxperpassenger,
                             nameof(FlightModel.Numberofcrew) => numericUpDownNumberofcrew,
@@ -101,7 +108,7 @@ namespace AirportWinFormsDgv.Forms
 
                         if (control != null)
                         {
-                            errorProvider.SetError(control, validationResult.ErrorMessage);
+                            errorProvider.SetError(control, error.ErrorMessage);
                         }
                     }
                 }
@@ -129,7 +136,7 @@ namespace AirportWinFormsDgv.Forms
                         case Aircrafttype.Airbus:
                             valueString = "Эйрбас";
                             break;
-                        case Aircrafttype.UAC:
+                        case Aircrafttype.UnitedAircraftCorporation:
                             valueString = "ОАК";
                             break;
                         case Aircrafttype.Boeing:

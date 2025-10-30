@@ -1,6 +1,9 @@
 ﻿namespace AirportWinFormsDgv.Constants
 {
-    public static class VadimConstants
+    /// <summary>
+    /// Общие константы приложения
+    /// </summary>
+    public class AppConstants
     {
         /// <summary>
         /// Максимальная длина строки для номера рейса.

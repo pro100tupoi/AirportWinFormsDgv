@@ -21,8 +21,8 @@
         Airbus = 2,
 
         /// <summary>
-        /// ОАК
+        /// Объединённая авиастроительная корпорация
         /// </summary>
-        UAC = 3
+        UnitedAircraftCorporation = 3
     }
 }
