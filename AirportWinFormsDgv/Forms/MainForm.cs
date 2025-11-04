@@ -20,26 +20,26 @@ namespace AirportWinFormsDgv
             items.Add(new FlightModel
             {
                 Id = Guid.NewGuid(),
-                Flightnumber = "SU-213",
-                Aircrafttype = Aircrafttype.Airbus,
-                Arrivaltime = DateTime.Now.AddDays(1),
-                Numberofpassengers = 150,
-                Taxperpassenger = 250.50m,
-                Numberofcrew = 8,
-                Taxpercrew = 120.75m,
-                Servicepercentage = 15.5m
+                FlightNumber = "SU-213",
+                AircraftType = AircraftType.Airbus,
+                ArrivalTime = DateTime.Now.AddDays(1),
+                NumberOfPassengers = 150,
+                TaxPerPassenger = 250.50m,
+                NumberOfCrew = 8,
+                TaxPerCrew = 120.75m,
+                ServicePercentage = 15.5m
             });
             items.Add(new FlightModel
             {
                 Id = Guid.NewGuid(),
-                Flightnumber = "BA-456",
-                Aircrafttype = Aircrafttype.Boeing,
-                Arrivaltime = DateTime.Now.AddDays(2).AddHours(3),
-                Numberofpassengers = 85,
-                Taxperpassenger = 180.00m,
-                Numberofcrew = 6,
-                Taxpercrew = 100.25m,
-                Servicepercentage = 12.0m
+                FlightNumber = "BA-456",
+                AircraftType = AircraftType.Boeing,
+                ArrivalTime = DateTime.Now.AddDays(2).AddHours(3),
+                NumberOfPassengers = 85,
+                TaxPerPassenger = 180.00m,
+                NumberOfCrew = 6,
+                TaxPerCrew = 100.25m,
+                ServicePercentage = 12.0m
             });
             InitializeComponent();
             SetStatistic();
@@ -48,39 +48,28 @@ namespace AirportWinFormsDgv
             dataGridViewflights.DataSource = bindingSource;
         }
 
-        private void dataGridViewflights_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void dataGridViewFlights_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Проверка индекса строки
-            // Убедимся, что индекс строки действителен и не превышает количество строк в DataSource
-            if (e.RowIndex < 0 || e.RowIndex >= dataGridViewflights.RowCount - 1) // -1 если AllowUserToAddRows = true и последняя строка - для добавления
+            // Пропускаем заголовки и недопустимые строки
+            if (e.RowIndex < 0)
             {
                 return;
             }
 
-            var col = dataGridViewflights.Columns[e.ColumnIndex];
-
-            // Проверяем, что DataBoundItem не null перед приведением типа
-            var dataBoundItem = dataGridViewflights.Rows[e.RowIndex].DataBoundItem;
-            if (col != null && col.DataPropertyName == nameof(FlightModel.Aircrafttype) && dataBoundItem is FlightModel airplane)
+            // Проверяем, что форматируем именно колонку AircraftType
+            if (dataGridViewflights.Columns[e.ColumnIndex].DataPropertyName == nameof(FlightModel.AircraftType))
             {
-                switch (airplane.Aircrafttype)
+                // e.Value уже содержит значение AircraftType
+                if (e.Value is AircraftType aircraftType)
                 {
-                    case Aircrafttype.Airbus:
-                        e.Value = "Эйрбас";
-                        e.FormattingApplied = true;
-                        break;
-                    case Aircrafttype.UnitedAircraftCorporation:
-                        e.Value = "ОАК";
-                        e.FormattingApplied = true;
-                        break;
-                    case Aircrafttype.Boeing:
-                        e.Value = "Боинг";
-                        e.FormattingApplied = true;
-                        break;
-                    default:
-                        e.Value = string.Empty;
-                        e.FormattingApplied = true;
-                        break;
+                    e.Value = aircraftType switch
+                    {
+                        AircraftType.Airbus => "Эйрбас",
+                        AircraftType.Boeing => "Боинг",
+                        AircraftType.UnitedAircraftCorporation => "ОАК",
+                        _ => string.Empty
+                    };
+                    e.FormattingApplied = true;
                 }
             }
         }
@@ -109,14 +98,14 @@ namespace AirportWinFormsDgv
                 var target = items.FirstOrDefault(x => x.Id == addForm.CurrentFlight.Id);
                 if (target != null)
                 {
-                    target.Flightnumber = addForm.CurrentFlight.Flightnumber;
-                    target.Aircrafttype = addForm.CurrentFlight.Aircrafttype;
-                    target.Arrivaltime = addForm.CurrentFlight.Arrivaltime;
-                    target.Numberofpassengers = addForm.CurrentFlight.Numberofpassengers;
-                    target.Taxperpassenger = addForm.CurrentFlight.Taxperpassenger;
-                    target.Numberofcrew = addForm.CurrentFlight.Numberofcrew;
-                    target.Taxpercrew = addForm.CurrentFlight.Taxpercrew;
-                    target.Servicepercentage = addForm.CurrentFlight.Servicepercentage;
+                    target.FlightNumber = addForm.CurrentFlight.FlightNumber;
+                    target.AircraftType = addForm.CurrentFlight.AircraftType;
+                    target.ArrivalTime = addForm.CurrentFlight.ArrivalTime;
+                    target.NumberOfPassengers = addForm.CurrentFlight.NumberOfPassengers;
+                    target.TaxPerPassenger = addForm.CurrentFlight.TaxPerPassenger;
+                    target.NumberOfCrew = addForm.CurrentFlight.NumberOfCrew;
+                    target.TaxPerCrew = addForm.CurrentFlight.TaxPerCrew;
+                    target.ServicePercentage = addForm.CurrentFlight.ServicePercentage;
                     RefreshDisplay();
                 }
             }
@@ -131,7 +120,7 @@ namespace AirportWinFormsDgv
 
             var flight = (FlightModel)dataGridViewflights.SelectedRows[0].DataBoundItem;
             var target = items.FirstOrDefault(x => x.Id == flight.Id);
-            if (target != null && MessageBox.Show($"Вы действительно хотите удалить '{target.Flightnumber}' ?", "Удаление рейса", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            if (target != null && MessageBox.Show($"Вы действительно хотите удалить '{target.FlightNumber}' ?", "Удаление рейса", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                 == DialogResult.Yes)
             {
                 items.Remove(target);
@@ -150,16 +139,16 @@ namespace AirportWinFormsDgv
             var flightForm = new FlightForm();
             if (flightForm.ShowDialog(this) == DialogResult.OK)
             {
-                flight.Flightnumber = flightForm.CurrentFlight.Flightnumber;
+                flight.FlightNumber = flightForm.CurrentFlight.FlightNumber;
             }
         }
 
         private void SetStatistic()
         {
             toolStripStatusLabelArrivingflights.Text = $"прибывающих рейсов:  {items.Count}";
-            var totalCrew = items.Sum(flight => flight.Numberofcrew);
+            var totalCrew = items.Sum(flight => flight.NumberOfCrew);
             toolStripStatusLabelTotalnumberofcrew.Text = $"общее количество экипажа: {totalCrew}";
-            var totalPassengers = items.Sum(flight => flight.Numberofpassengers);
+            var totalPassengers = items.Sum(flight => flight.NumberOfPassengers);
             toolStripStatusLabelTotalnumberofpassengers.Text = $"общее количество пассажиров: {totalPassengers}";
             var totalRevenue = items.Sum(flight => flight.Revenue);
             toolStripStatusLabelTotalrevenue.Text = $"сумма всей выручки: {totalRevenue:F2}";

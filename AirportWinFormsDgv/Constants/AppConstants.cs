@@ -13,7 +13,7 @@
         /// <summary>
         /// Минимальное значение для количества пассажиров.
         /// </summary>
-        public const int NumberOfPassengersMin = 0;
+        public const int NumberOfPassengersMin = 1;
 
         /// <summary>
         /// Максимальное значение для количества пассажиров.
@@ -24,7 +24,7 @@
         /// Минимальное значение для сбора на пассажира.
         /// </summary>
         ///
-        public const double TaxPerPassengerMin = 0;
+        public const double TaxPerPassengerMin = 1;
 
         /// <summary>
         /// Максимальное значение для сбора на пассажира.
@@ -34,7 +34,7 @@
         /// <summary>
         /// Минимальное значение для количества экипажа.
         /// </summary>
-        public const int NumberOfCrewMin = 0;
+        public const int NumberOfCrewMin = 1;
 
         /// <summary>
         /// Максимальное значение для количества экипажа.
@@ -44,7 +44,7 @@
         /// <summary>
         /// Минимальное значение для сбора на экипаж.
         /// </summary>
-        public const double TaxPerCrewMin = 0;
+        public const double TaxPerCrewMin = 1;
 
         /// <summary>
         /// Максимальное значение для сбора на экипаж.
@@ -54,7 +54,7 @@
         /// <summary>
         /// Минимальное значение для процента надбавки за обслуживание.
         /// </summary>
-        public const double ServicePercentageMin = 0;
+        public const double ServicePercentageMin = 1;
 
         /// <summary>
         /// Максимальное значение для процента надбавки за обслуживание.

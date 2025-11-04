@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             panel1 = new Panel();
             buttonAdd = new Button();
             buttonEscape = new Button();
@@ -48,13 +47,11 @@
             numericUpDownNumberofcrew = new NumericUpDown();
             numericUpDownTaxpercrew = new NumericUpDown();
             numericUpDownServicepercentage = new NumericUpDown();
-            errorProvider = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)numericUpDownNumberofpassengers).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownTaxperpassenger).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownNumberofcrew).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownTaxpercrew).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownServicepercentage).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -223,10 +220,6 @@
             numericUpDownServicepercentage.Size = new Size(82, 23);
             numericUpDownServicepercentage.TabIndex = 27;
             // 
-            // errorProvider
-            // 
-            errorProvider.ContainerControl = this;
-            // 
             // FlightForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -252,13 +245,12 @@
             Controls.Add(buttonAdd);
             Controls.Add(panel1);
             Name = "FlightForm";
-            Text = "FlightForm";
+            Text = "Рейс";
             ((System.ComponentModel.ISupportInitialize)numericUpDownNumberofpassengers).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownTaxperpassenger).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownNumberofcrew).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownTaxpercrew).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownServicepercentage).EndInit();
-            ((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -284,6 +276,5 @@
         private NumericUpDown numericUpDownNumberofcrew;
         private NumericUpDown numericUpDownTaxpercrew;
         private NumericUpDown numericUpDownServicepercentage;
-        private ErrorProvider errorProvider;
     }
 }

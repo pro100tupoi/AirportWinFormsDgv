@@ -9,7 +9,7 @@ namespace AirportWinFormsDgv.Classes
     public class FlightModel
     {
         /// <summary>
-        /// Id
+        /// Уникальный идентификатор
         /// </summary>
         public Guid Id { get; set; }
 
@@ -19,58 +19,58 @@ namespace AirportWinFormsDgv.Classes
         [Display(Name = "Номер рейса")]
         [Required(ErrorMessage = "{0} обязателен для заполнения")]
         [StringLength(AppConstants.FlightNumberMaxLength, ErrorMessage = "{0} должен быть не более {1} символов")]
-        public string Flightnumber { get; set; } = string.Empty;
+        public string FlightNumber { get; set; } = string.Empty;
 
         /// <inheritdoc cref="Classes.Aircrafttype"/>
         [Display(Name = "Тип воздушного судна")]
-        public Aircrafttype Aircrafttype { get; set; }
+        public AircraftType AircraftType { get; set; }
 
         /// <summary>
         /// Время прибытия
         /// </summary>
         [Display(Name = "Время прибытия")]
-        public DateTime Arrivaltime { get; set; }
+        public DateTime ArrivalTime { get; set; }
 
         /// <summary>
         /// Количество пассажиров
         /// </summary>
         [Display(Name = "Количество пассажиров")]
         [Range(AppConstants.NumberOfPassengersMin, AppConstants.NumberOfPassengersMax, ErrorMessage = "{0} должно быть от {1} до {2}")]
-        public int Numberofpassengers { get; set; }
+        public int NumberOfPassengers { get; set; }
 
         /// <summary>
         /// Сбор на пассажира
         /// </summary>
         [Display(Name = "Сбор на пассажира")]
         [Range(AppConstants.TaxPerPassengerMin, AppConstants.TaxPerPassengerMax, ErrorMessage = "{0} должен быть от {1} до {2}")]
-        public decimal Taxperpassenger { get; set; }
+        public decimal TaxPerPassenger { get; set; }
 
         /// <summary>
         /// Количество экипажа
         /// </summary>
         [Display(Name = "Количество экипажа")]
         [Range(AppConstants.NumberOfCrewMin, AppConstants.NumberOfCrewMax, ErrorMessage = "{0} должно быть от {1} до {2}")]
-        public int Numberofcrew { get; set; }
+        public int NumberOfCrew { get; set; }
 
         /// <summary>
         /// Сбор на экипаж
         /// </summary>
         [Display(Name = "Сбор на экипаж")]
         [Range(AppConstants.TaxPerCrewMin, AppConstants.TaxPerCrewMax, ErrorMessage = "{0} должен быть от {1} до {2}")]
-        public decimal Taxpercrew { get; set; }
+        public decimal TaxPerCrew { get; set; }
 
         /// <summary>
         /// Процент надбавки за обслуживание
         /// </summary>
         [Display(Name = "Процент надбавки за обслуживание")]
         [Range(AppConstants.ServicePercentageMin, AppConstants.ServicePercentageMax, ErrorMessage = "{0} должен быть от {1} до {2}")]
-        public decimal Servicepercentage { get; set; }
+        public decimal ServicePercentage { get; set; }
 
         /// <summary>
         /// Выручка ((пассажиры * сбор + экипаж * сбор) + процент надбавки
         /// </summary>
         [Display(Name = "Выручка")]
         public decimal Revenue =>
-            (Numberofpassengers * Taxperpassenger + Numberofcrew * Taxpercrew) + Servicepercentage;
+            (NumberOfPassengers * TaxPerPassenger + NumberOfCrew * TaxPerCrew) + ServicePercentage;
     }
 }

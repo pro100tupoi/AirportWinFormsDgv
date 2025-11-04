@@ -3,7 +3,7 @@
     /// <summary>
     /// Тип самолёта
     /// </summary>
-    public enum Aircrafttype : byte
+    public enum AircraftType : byte
     {
         /// <summary>
         /// Не известно

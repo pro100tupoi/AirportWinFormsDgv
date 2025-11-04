@@ -27,15 +27,85 @@ namespace AirportWinFormsDgv
             where TControl : Control
             where TSource : class
         {
-            var destName = GetPropertyName(destinationProperty);
-            var srcName = GetPropertyName(sourceProperty);
+            var controlPropName = GetPropertyName(destinationProperty);
+            var sourcePropName = GetPropertyName(sourceProperty);
 
-            if (control.DataBindings[destName] != null)
+            var existing = control.DataBindings[controlPropName];
+            if (existing != null)
             {
-                control.DataBindings.Remove(control.DataBindings[destName]);
+                control.DataBindings.Remove(existing);
             }
 
-            control.DataBindings.Add(destName, source, srcName, false, DataSourceUpdateMode.OnPropertyChanged);
+            var binding = new Binding(controlPropName, source, sourcePropName, true)
+            {
+                DataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged
+            };
+
+            control.DataBindings.Add(binding);
+
+            if (errorProvider != null)
+            {
+                AddValidation(control, source, sourcePropName, errorProvider);
+            }
+        }
+
+        /// <summary>
+        /// Добавление валидации к контролу
+        /// </summary>
+        private static void AddValidation<TControl, TSource>(
+            TControl control,
+            TSource source,
+            string sourcePropertyName,
+            ErrorProvider errorProvider)
+            where TControl : Control
+            where TSource : class
+        {
+            var sourcePropertyInfo = source.GetType().GetProperty(sourcePropertyName);
+            if (sourcePropertyInfo == null)
+            {
+                return;
+            }
+
+            control.Validating += (sender, e) =>
+            {
+                ValidateControl(control, source, sourcePropertyName, errorProvider);
+            };
+        }
+
+        /// <summary>
+        /// Валидация конкретного контрола
+        /// </summary>
+        private static void ValidateControl<TControl, TSource>(
+            TControl control,
+            TSource source,
+            string sourcePropertyName,
+            ErrorProvider errorProvider)
+            where TControl : Control
+            where TSource : class
+        {
+            var sourcePropertyInfo = source.GetType().GetProperty(sourcePropertyName);
+            if (sourcePropertyInfo == null)
+            {
+                return;
+            }
+
+            var context = new ValidationContext(source) { MemberName = sourcePropertyName };
+            var results = new List<ValidationResult>();
+
+            var propertyValue = sourcePropertyInfo.GetValue(source);
+
+            var isValid = Validator.TryValidateProperty(propertyValue, context, results);
+
+            if (!isValid && results.Count > 0)
+            {
+                var propertyError = results.Where(x => x.MemberNames.Contains(sourcePropertyName));
+
+                errorProvider.SetError(control, propertyError.First().ErrorMessage);
+            }
+            else
+            {
+                errorProvider.SetError(control, string.Empty);
+            }
         }
 
         private static string GetPropertyName<TType>(Expression<Func<TType, object>> expression)
