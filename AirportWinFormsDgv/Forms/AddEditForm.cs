@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AirportWinFormsDgv.Classes;
+using AirportWinFormsDgv.Services;
 
 namespace AirportWinFormsDgv.Forms
 {
     /// <summary>
     /// Форма добавления или редактирования рейса
     /// </summary>
-    public partial class FlightForm : Form
+    public partial class AddEditForm : Form
     {
         private readonly FlightModel targetFlight;
         private readonly ErrorProvider errorProvider = new ErrorProvider();
@@ -14,7 +15,7 @@ namespace AirportWinFormsDgv.Forms
         /// Создаёт форму добавления или редактирования рейса
         /// </summary>
         /// <param name="sourceFlight">Модель рейса для редактирования или для создания нового.</param>
-        public FlightForm(FlightModel? sourceFlight = null)
+        public AddEditForm(FlightModel? sourceFlight = null)
         {
             if (sourceFlight != null)
             {
@@ -81,6 +82,8 @@ namespace AirportWinFormsDgv.Forms
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            targetFlight.Revenue = FlightCalculator.CalculateRevenue(targetFlight);
+
             var context = new ValidationContext(targetFlight);
             var results = new List<ValidationResult>();
 

@@ -1,5 +1,6 @@
 ﻿using AirportWinFormsDgv.Classes;
 using AirportWinFormsDgv.Forms;
+using AirportWinFormsDgv.Services;
 
 namespace AirportWinFormsDgv
 {
@@ -8,16 +9,14 @@ namespace AirportWinFormsDgv
     /// </summary>
     public partial class MainForm : Form
     {
-        private readonly List<FlightModel> items;
+        private readonly List<FlightModel> items = new();
         private readonly BindingSource bindingSource = new();
         /// <summary>
         /// Инициализирует главную форму
         /// </summary>
         public MainForm()
         {
-            items = new List<FlightModel>();
-
-            items.Add(new FlightModel
+            var flight1 = new FlightModel
             {
                 Id = Guid.NewGuid(),
                 FlightNumber = "SU-213",
@@ -28,8 +27,11 @@ namespace AirportWinFormsDgv
                 NumberOfCrew = 8,
                 TaxPerCrew = 120.75m,
                 ServicePercentage = 15.5m
-            });
-            items.Add(new FlightModel
+            };
+            flight1.Revenue = FlightCalculator.CalculateRevenue(flight1);
+            items.Add(flight1);
+
+            var flight2 = new FlightModel
             {
                 Id = Guid.NewGuid(),
                 FlightNumber = "BA-456",
@@ -40,7 +42,10 @@ namespace AirportWinFormsDgv
                 NumberOfCrew = 6,
                 TaxPerCrew = 100.25m,
                 ServicePercentage = 12.0m
-            });
+            };
+            flight2.Revenue = FlightCalculator.CalculateRevenue(flight2);
+            items.Add(flight2);
+
             InitializeComponent();
             SetStatistic();
             dataGridViewflights.AutoGenerateColumns = false;
@@ -76,7 +81,7 @@ namespace AirportWinFormsDgv
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var addForm = new FlightForm();
+            var addForm = new AddEditForm();
             if (addForm.ShowDialog(this) == DialogResult.OK)
             {
                 items.Add(addForm.CurrentFlight);
@@ -92,20 +97,22 @@ namespace AirportWinFormsDgv
             }
             var flight = (FlightModel)dataGridViewflights.SelectedRows[0].DataBoundItem;
 
-            var addForm = new FlightForm(flight);
-            if (addForm.ShowDialog(this) == DialogResult.OK)
+            var editForm = new AddEditForm(flight);
+            if (editForm.ShowDialog(this) == DialogResult.OK)
             {
-                var target = items.FirstOrDefault(x => x.Id == addForm.CurrentFlight.Id);
+                var target = items.FirstOrDefault(x => x.Id == editForm.CurrentFlight.Id);
                 if (target != null)
                 {
-                    target.FlightNumber = addForm.CurrentFlight.FlightNumber;
-                    target.AircraftType = addForm.CurrentFlight.AircraftType;
-                    target.ArrivalTime = addForm.CurrentFlight.ArrivalTime;
-                    target.NumberOfPassengers = addForm.CurrentFlight.NumberOfPassengers;
-                    target.TaxPerPassenger = addForm.CurrentFlight.TaxPerPassenger;
-                    target.NumberOfCrew = addForm.CurrentFlight.NumberOfCrew;
-                    target.TaxPerCrew = addForm.CurrentFlight.TaxPerCrew;
-                    target.ServicePercentage = addForm.CurrentFlight.ServicePercentage;
+                    target.FlightNumber = editForm.CurrentFlight.FlightNumber;
+                    target.AircraftType = editForm.CurrentFlight.AircraftType;
+                    target.ArrivalTime = editForm.CurrentFlight.ArrivalTime;
+                    target.NumberOfPassengers = editForm.CurrentFlight.NumberOfPassengers;
+                    target.TaxPerPassenger = editForm.CurrentFlight.TaxPerPassenger;
+                    target.NumberOfCrew = editForm.CurrentFlight.NumberOfCrew;
+                    target.TaxPerCrew = editForm.CurrentFlight.TaxPerCrew;
+                    target.ServicePercentage = editForm.CurrentFlight.ServicePercentage;
+
+                    target.Revenue = FlightCalculator.CalculateRevenue(target);
                     RefreshDisplay();
                 }
             }
@@ -136,7 +143,7 @@ namespace AirportWinFormsDgv
             }
 
             var flight = (FlightModel)dataGridViewflights.SelectedRows[0].DataBoundItem;
-            var flightForm = new FlightForm();
+            var flightForm = new AddEditForm();
             if (flightForm.ShowDialog(this) == DialogResult.OK)
             {
                 flight.FlightNumber = flightForm.CurrentFlight.FlightNumber;

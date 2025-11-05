@@ -1,6 +1,6 @@
 ﻿namespace AirportWinFormsDgv.Forms
 {
-    partial class FlightForm
+    partial class AddEditForm
     {
         /// <summary>
         /// Required designer variable.
