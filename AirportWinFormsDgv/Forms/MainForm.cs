@@ -61,7 +61,6 @@ namespace AirportWinFormsDgv.Forms
                 return;
             }
 
-            // Тип самолёта → русский текст
             if (col.DataPropertyName == nameof(FlightModel.AircraftType))
             {
                 e.Value = flight.AircraftType switch
@@ -73,7 +72,6 @@ namespace AirportWinFormsDgv.Forms
                 };
             }
 
-            // Выручка → рассчитываем, как в примере
             if (col == RevenueColumn)
             {
                 e.Value = FlightCalculator.CalculateRevenue(flight);
