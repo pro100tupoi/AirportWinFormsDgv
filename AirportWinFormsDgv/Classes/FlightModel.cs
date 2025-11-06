@@ -65,11 +65,5 @@ namespace AirportWinFormsDgv.Classes
         [Display(Name = "Процент надбавки за обслуживание")]
         [Range(AppConstants.ServicePercentageMin, AppConstants.ServicePercentageMax, ErrorMessage = "{0} должен быть от {1} до {2}")]
         public decimal ServicePercentage { get; set; }
-
-        /// <summary>
-        /// Выручка ((пассажиры * сбор + экипаж * сбор) + процент надбавки
-        /// </summary>
-        [Display(Name = "Выручка")]
-        public decimal Revenue { get; set; }
     }
 }

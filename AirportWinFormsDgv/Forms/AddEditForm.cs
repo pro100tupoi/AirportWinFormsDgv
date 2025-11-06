@@ -82,8 +82,6 @@ namespace AirportWinFormsDgv.Forms
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            targetFlight.Revenue = FlightCalculator.CalculateRevenue(targetFlight);
-
             var context = new ValidationContext(targetFlight);
             var results = new List<ValidationResult>();
 

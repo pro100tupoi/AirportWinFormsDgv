@@ -28,7 +28,6 @@ namespace AirportWinFormsDgv.Forms
                 TaxPerCrew = 120.75m,
                 ServicePercentage = 15.5m
             };
-            flight1.Revenue = FlightCalculator.CalculateRevenue(flight1);
             items.Add(flight1);
 
             var flight2 = new FlightModel
@@ -43,7 +42,6 @@ namespace AirportWinFormsDgv.Forms
                 TaxPerCrew = 100.25m,
                 ServicePercentage = 12.0m
             };
-            flight2.Revenue = FlightCalculator.CalculateRevenue(flight2);
             items.Add(flight2);
 
             InitializeComponent();
@@ -55,27 +53,30 @@ namespace AirportWinFormsDgv.Forms
 
         private void dataGridViewFlights_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Пропускаем заголовки и недопустимые строки
-            if (e.RowIndex < 0)
+            var col = dataGridViewflights.Columns[e.ColumnIndex];
+            var flight = (FlightModel)dataGridViewflights.Rows[e.RowIndex].DataBoundItem;
+
+            if (flight == null)
             {
                 return;
             }
 
-            // Проверяем, что форматируем именно колонку AircraftType
-            if (dataGridViewflights.Columns[e.ColumnIndex].DataPropertyName == nameof(FlightModel.AircraftType))
+            // Тип самолёта → русский текст
+            if (col.DataPropertyName == nameof(FlightModel.AircraftType))
             {
-                // e.Value уже содержит значение AircraftType
-                if (e.Value is AircraftType aircraftType)
+                e.Value = flight.AircraftType switch
                 {
-                    e.Value = aircraftType switch
-                    {
-                        AircraftType.Airbus => "Эйрбас",
-                        AircraftType.Boeing => "Боинг",
-                        AircraftType.UnitedAircraftCorporation => "ОАК",
-                        _ => string.Empty
-                    };
-                    e.FormattingApplied = true;
-                }
+                    AircraftType.Airbus => "Эйрбас",
+                    AircraftType.Boeing => "Боинг",
+                    AircraftType.UnitedAircraftCorporation => "ОАК",
+                    _ => string.Empty
+                };
+            }
+
+            // Выручка → рассчитываем, как в примере
+            if (col == RevenueColumn)
+            {
+                e.Value = FlightCalculator.CalculateRevenue(flight);
             }
         }
 
@@ -112,7 +113,6 @@ namespace AirportWinFormsDgv.Forms
                     target.TaxPerCrew = editForm.CurrentFlight.TaxPerCrew;
                     target.ServicePercentage = editForm.CurrentFlight.ServicePercentage;
 
-                    target.Revenue = FlightCalculator.CalculateRevenue(target);
                     RefreshDisplay();
                 }
             }
@@ -152,12 +152,10 @@ namespace AirportWinFormsDgv.Forms
 
         private void SetStatistic()
         {
-            toolStripStatusLabelArrivingflights.Text = $"прибывающих рейсов:  {items.Count}";
-            var totalCrew = items.Sum(flight => flight.NumberOfCrew);
-            toolStripStatusLabelTotalnumberofcrew.Text = $"общее количество экипажа: {totalCrew}";
-            var totalPassengers = items.Sum(flight => flight.NumberOfPassengers);
-            toolStripStatusLabelTotalnumberofpassengers.Text = $"общее количество пассажиров: {totalPassengers}";
-            var totalRevenue = items.Sum(flight => flight.Revenue);
+            toolStripStatusLabelArrivingflights.Text = $"прибывающих рейсов: {items.Count}";
+            toolStripStatusLabelTotalnumberofcrew.Text = $"общее количество экипажа: {items.Sum(f => f.NumberOfCrew)}";
+            toolStripStatusLabelTotalnumberofpassengers.Text = $"общее количество пассажиров: {items.Sum(f => f.NumberOfPassengers)}";
+            var totalRevenue = items.Sum(flight => FlightCalculator.CalculateRevenue(flight));
             toolStripStatusLabelTotalrevenue.Text = $"сумма всей выручки: {totalRevenue:F2}";
         }
 

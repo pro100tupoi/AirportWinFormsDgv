@@ -200,7 +200,6 @@
             // 
             // RevenueColumn
             // 
-            RevenueColumn.DataPropertyName = "Revenue";
             RevenueColumn.HeaderText = "Выручка";
             RevenueColumn.Name = "RevenueColumn";
             RevenueColumn.ReadOnly = true;

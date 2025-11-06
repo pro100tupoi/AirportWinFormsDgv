@@ -23,6 +23,6 @@
         /// <summary>
         /// Объединённая авиастроительная корпорация
         /// </summary>
-        UnitedAircraftCorporation = 3
+        UnitedAircraftCorporation = 3,
     }
 }
