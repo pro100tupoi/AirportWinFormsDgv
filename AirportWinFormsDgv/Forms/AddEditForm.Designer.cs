@@ -169,7 +169,7 @@
             comboBoxAircrafttype.Name = "comboBoxAircrafttype";
             comboBoxAircrafttype.Size = new Size(239, 23);
             comboBoxAircrafttype.TabIndex = 21;
-            comboBoxAircrafttype.DrawItem += comboBoxAircrafttype_DrawItem;
+            comboBoxAircrafttype.DrawItem += comboBoxAircraftType_DrawItem;
             // 
             // dateTimePickerArrivaltime
             // 

@@ -1,6 +1,6 @@
 ﻿using AirportWinFormsDgv.Classes;
 
-namespace AirportWinFormsDgv.Services
+namespace AirportWinFormsDgv.Calculates
 {
     /// <summary>
     /// Сервис для расчёта финансовых показателей рейса.

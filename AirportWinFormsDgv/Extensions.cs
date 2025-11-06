@@ -49,9 +49,6 @@ namespace AirportWinFormsDgv
             }
         }
 
-        /// <summary>
-        /// Добавление валидации к контролу
-        /// </summary>
         private static void AddValidation<TControl, TSource>(
             TControl control,
             TSource source,
@@ -66,15 +63,12 @@ namespace AirportWinFormsDgv
                 return;
             }
 
-            control.Validating += (sender, e) =>
+            control.Validating += (_, _) =>
             {
                 ValidateControl(control, source, sourcePropertyName, errorProvider);
             };
         }
 
-        /// <summary>
-        /// Валидация конкретного контрола
-        /// </summary>
         private static void ValidateControl<TControl, TSource>(
             TControl control,
             TSource source,

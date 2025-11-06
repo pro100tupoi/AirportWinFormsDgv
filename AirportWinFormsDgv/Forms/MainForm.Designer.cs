@@ -1,4 +1,4 @@
-﻿namespace AirportWinFormsDgv
+﻿namespace AirportWinFormsDgv.Forms
 {
     partial class MainForm
     {
@@ -139,7 +139,7 @@
             dataGridViewflights.ReadOnly = true;
             dataGridViewflights.Size = new Size(943, 403);
             dataGridViewflights.TabIndex = 2;
-            dataGridViewflights.CellContentClick += dataGridViewflights_CellContentClick;
+            dataGridViewflights.CellContentClick += dataGridViewFlights_CellContentClick;
             dataGridViewflights.CellFormatting += dataGridViewFlights_CellFormatting;
             // 
             // FlightnumberColumn

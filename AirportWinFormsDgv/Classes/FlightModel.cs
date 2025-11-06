@@ -70,6 +70,6 @@ namespace AirportWinFormsDgv.Classes
         /// Выручка ((пассажиры * сбор + экипаж * сбор) + процент надбавки
         /// </summary>
         [Display(Name = "Выручка")]
-        public decimal Revenue { get; set; } // ← обычное свойство
+        public decimal Revenue { get; set; }
     }
 }

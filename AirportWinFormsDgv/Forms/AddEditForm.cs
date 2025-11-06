@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AirportWinFormsDgv.Classes;
-using AirportWinFormsDgv.Services;
+using AirportWinFormsDgv.Calculates;
 
 namespace AirportWinFormsDgv.Forms
 {
@@ -107,7 +107,7 @@ namespace AirportWinFormsDgv.Forms
             Close();
         }
 
-        private void comboBoxAircrafttype_DrawItem(object sender, DrawItemEventArgs e)
+        private void comboBoxAircraftType_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index >= 0)
             {
@@ -115,7 +115,7 @@ namespace AirportWinFormsDgv.Forms
                 e.DrawFocusRectangle();
                 if (comboBoxAircrafttype.Items[e.Index] is AircraftType aircraftType)
                 {
-                    string text = aircraftType switch
+                    var text = aircraftType switch
                     {
                         AircraftType.Airbus => "Эйрбас",
                         AircraftType.Boeing => "Боинг",

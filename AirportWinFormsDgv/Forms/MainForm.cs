@@ -1,8 +1,8 @@
 ﻿using AirportWinFormsDgv.Classes;
 using AirportWinFormsDgv.Forms;
-using AirportWinFormsDgv.Services;
+using AirportWinFormsDgv.Calculates;
 
-namespace AirportWinFormsDgv
+namespace AirportWinFormsDgv.Forms
 {
     /// <summary>
     /// Главная форма приложения
@@ -135,7 +135,7 @@ namespace AirportWinFormsDgv
             }
         }
 
-        private void dataGridViewflights_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewFlights_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridViewflights.SelectedRows.Count == 0)
             {
