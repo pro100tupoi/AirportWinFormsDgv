@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AirportWinFormsDgv.Classes;
-using AirportWinFormsDgv.Calculates;
 
 namespace AirportWinFormsDgv.Forms
 {
@@ -9,6 +8,11 @@ namespace AirportWinFormsDgv.Forms
     /// </summary>
     public partial class AddEditForm : Form
     {
+        /// <summary>
+        /// Возвращает текущий объект FlightModel, созданный или изменённый в этой форме
+        /// </summary>
+        public FlightModel CurrentFlight => targetFlight;
+
         private readonly FlightModel targetFlight;
         private readonly ErrorProvider errorProvider = new ErrorProvider();
         /// <summary>
@@ -74,11 +78,6 @@ namespace AirportWinFormsDgv.Forms
             errorProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
             errorProvider.ContainerControl = this;
         }
-
-        /// <summary>
-        /// Возвращает текущий объект FlightModel, созданный или изменённый в этой форме
-        /// </summary>
-        public FlightModel CurrentFlight => targetFlight;
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
