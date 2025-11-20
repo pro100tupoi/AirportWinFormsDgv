@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using AirportWinFormsDgv.Classes;
+using AirportWinFormsDgv.App.Infrastructure;
+using AirportWinFormsDgv.Entities.Models;
 
-namespace AirportWinFormsDgv.Forms
+namespace AirportWinFormsDgv.App.Forms
 {
     /// <summary>
     /// Форма добавления или редактирования рейса

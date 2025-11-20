@@ -1,6 +1,6 @@
-﻿using AirportWinFormsDgv.Forms;
+﻿using AirportWinFormsDgv.App.Forms;
 
-namespace AirportWinFormsDgv
+namespace AirportWinFormsDgv.App
 {
     /// <summary>
     /// Класс точки входа в приложение.

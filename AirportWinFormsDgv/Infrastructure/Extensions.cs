@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 
-namespace AirportWinFormsDgv
+namespace AirportWinFormsDgv.App.Infrastructure
 {
     /// <summary>
     /// Методы расширения для упрощения привязки данных

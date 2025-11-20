@@ -1,4 +1,4 @@
-﻿namespace AirportWinFormsDgv.Forms
+﻿namespace AirportWinFormsDgv.App.Forms
 {
     partial class AddEditForm
     {

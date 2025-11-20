@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AirportWinFormsDgv.Constants;
+﻿using AirportWinFormsDgv.Constants;
+using System.ComponentModel.DataAnnotations;
 
-namespace AirportWinFormsDgv.Classes
+namespace AirportWinFormsDgv.Entities.Models
 {
     /// <summary>
     /// Рейс

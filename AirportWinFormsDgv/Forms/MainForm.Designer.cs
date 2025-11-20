@@ -1,4 +1,4 @@
-﻿namespace AirportWinFormsDgv.Forms
+﻿namespace AirportWinFormsDgv.App.Forms
 {
     partial class MainForm
     {
@@ -139,7 +139,6 @@
             dataGridViewflights.ReadOnly = true;
             dataGridViewflights.Size = new Size(943, 403);
             dataGridViewflights.TabIndex = 2;
-            dataGridViewflights.CellContentClick += dataGridViewFlights_CellContentClick;
             dataGridViewflights.CellFormatting += dataGridViewFlights_CellFormatting;
             // 
             // FlightnumberColumn
@@ -214,6 +213,7 @@
             Controls.Add(statusStrip1);
             Name = "MainForm";
             Text = "Просмотр рейсов";
+            Load += MainForm_Load;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             toolStrip1.ResumeLayout(false);

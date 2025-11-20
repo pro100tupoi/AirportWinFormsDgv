@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AirportWinFormsDgv.Constants\AirportWinFormsDgv.Constants.csproj" />
+    <ProjectReference Include="..\AirportWinFormsDgv.Entities\AirportWinFormsDgv.Entities.csproj" />
+    <ProjectReference Include="..\AirportWinFormsDgv.Services.Contracts\AirportWinFormsDgv.Services.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

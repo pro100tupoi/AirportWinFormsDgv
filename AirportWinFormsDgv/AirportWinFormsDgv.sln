@@ -1,9 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14 d17.14
+VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv", "AirportWinFormsDgv.csproj", "{7DD109BD-0D0E-BC1B-5577-C4BDCBF6D1A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.App", "AirportWinFormsDgv.App.csproj", "{7DD109BD-0D0E-BC1B-5577-C4BDCBF6D1A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BL", "BL", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{80C59DDC-C48B-4EBC-9F5F-91CEF980AC66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.Entities", "..\AirportWinFormsDgv.Entities\AirportWinFormsDgv.Entities.csproj", "{407F1795-C3BE-4627-9EB9-144FA29CEC64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.Constants", "..\AirportWinFormsDgv.Constants\AirportWinFormsDgv.Constants.csproj", "{B2F36433-F5ED-4E69-BB5B-2AF752C8E3F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.Services", "..\AirportWinFormsDgv.Services\AirportWinFormsDgv.Services.csproj", "{830C866E-D97C-4206-AC28-07DAF3750434}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.Services.Contracts", "..\AirportWinFormsDgv.Services.Contracts\AirportWinFormsDgv.Services.Contracts.csproj", "{931AFD8A-C0E1-4B93-BEAB-79025F19E4FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +27,30 @@ Global
 		{7DD109BD-0D0E-BC1B-5577-C4BDCBF6D1A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DD109BD-0D0E-BC1B-5577-C4BDCBF6D1A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DD109BD-0D0E-BC1B-5577-C4BDCBF6D1A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{407F1795-C3BE-4627-9EB9-144FA29CEC64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{407F1795-C3BE-4627-9EB9-144FA29CEC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{407F1795-C3BE-4627-9EB9-144FA29CEC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{407F1795-C3BE-4627-9EB9-144FA29CEC64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2F36433-F5ED-4E69-BB5B-2AF752C8E3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F36433-F5ED-4E69-BB5B-2AF752C8E3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F36433-F5ED-4E69-BB5B-2AF752C8E3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F36433-F5ED-4E69-BB5B-2AF752C8E3F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{830C866E-D97C-4206-AC28-07DAF3750434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{830C866E-D97C-4206-AC28-07DAF3750434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{830C866E-D97C-4206-AC28-07DAF3750434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{830C866E-D97C-4206-AC28-07DAF3750434}.Release|Any CPU.Build.0 = Release|Any CPU
+		{931AFD8A-C0E1-4B93-BEAB-79025F19E4FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{931AFD8A-C0E1-4B93-BEAB-79025F19E4FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{931AFD8A-C0E1-4B93-BEAB-79025F19E4FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{931AFD8A-C0E1-4B93-BEAB-79025F19E4FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{407F1795-C3BE-4627-9EB9-144FA29CEC64} = {80C59DDC-C48B-4EBC-9F5F-91CEF980AC66}
+		{830C866E-D97C-4206-AC28-07DAF3750434} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{931AFD8A-C0E1-4B93-BEAB-79025F19E4FA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {69FEA453-8707-4F51-B708-DECA8308D704}
