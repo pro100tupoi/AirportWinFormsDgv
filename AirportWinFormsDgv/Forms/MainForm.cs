@@ -1,6 +1,6 @@
-﻿using AirportWinFormsDgv.Entities.Models;
-using AirportWinFormsDgv.Services;
-using AirportWinFormsDgv.Services.Contracts;
+﻿using AirportWinFormsDgv.BL.Services;
+using AirportWinFormsDgv.BL.Services.Contracts;
+using AirportWinFormsDgv.DAL.Entities.Models;
 
 namespace AirportWinFormsDgv.App.Forms
 {
@@ -18,12 +18,43 @@ namespace AirportWinFormsDgv.App.Forms
         public MainForm()
         {
             InitializeComponent();
-            flightService = new ListStorage();
+            flightService = new FlightStorage();
             dataGridViewflights.AutoGenerateColumns = false;
         }
 
         private async void MainForm_Load(object sender, EventArgs e)
         {
+            var item1 =
+                new FlightModel
+                {
+                    Id = Guid.NewGuid(),
+                    FlightNumber = "SU-213",
+                    AircraftType = AircraftType.Airbus,
+                    ArrivalTime = DateTime.Now.AddDays(1),
+                    NumberOfPassengers = 150,
+                    TaxPerPassenger = 250.50m,
+                    NumberOfCrew = 8,
+                    TaxPerCrew = 120.75m,
+                    ServicePercentage = 15.5m
+                };
+
+            var item2 =
+                new FlightModel
+                {
+                    Id = Guid.NewGuid(),
+                    FlightNumber = "BA-456",
+                    AircraftType = AircraftType.Boeing,
+                    ArrivalTime = DateTime.Now.AddDays(2).AddHours(3),
+                    NumberOfPassengers = 85,
+                    TaxPerPassenger = 180.00m,
+                    NumberOfCrew = 6,
+                    TaxPerCrew = 100.25m,
+                    ServicePercentage = 12.0m
+                };
+
+            await flightService.AddFlightAsync(item1);
+            await flightService.AddFlightAsync(item2);
+
             await LoadData();
         }
 
@@ -46,7 +77,7 @@ namespace AirportWinFormsDgv.App.Forms
         private async Task SetStatistic()
         {
             var flights = await flightService.GetAllFlightsAsync();
-            var statistics = await flightService.GetStatisticsAsync(flights);
+            var statistics = await flightService.GetStatisticsAsync();
 
             toolStripStatusLabelArrivingflights.Text = $"прибывающих рейсов: {statistics.TotalFlights}";
             toolStripStatusLabelTotalnumberofcrew.Text = $"общее количество экипажа: {statistics.TotalCrew}";

@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AirportWinFormsDgv.Entities\AirportWinFormsDgv.Entities.csproj" />
-    <ProjectReference Include="..\AirportWinFormsDgv.Services\AirportWinFormsDgv.Services.csproj" />
+    <ProjectReference Include="..\BL\AirportWinFormsDgv.Services\AirportWinFormsDgv.Services.csproj" />
+    <ProjectReference Include="..\DAL\AirportWinFormsDgv.Entities\AirportWinFormsDgv.Entities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

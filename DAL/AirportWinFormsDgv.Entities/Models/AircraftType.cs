@@ -1,4 +1,4 @@
-﻿namespace AirportWinFormsDgv.Entities.Models
+﻿namespace AirportWinFormsDgv.DAL.Entities.Models
 {
     /// <summary>
     /// Тип самолёта

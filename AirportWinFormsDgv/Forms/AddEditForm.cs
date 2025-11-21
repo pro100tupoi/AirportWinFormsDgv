@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AirportWinFormsDgv.App.Infrastructure;
-using AirportWinFormsDgv.Entities.Models;
+using AirportWinFormsDgv.DAL.Entities.Models;
 
 namespace AirportWinFormsDgv.App.Forms
 {

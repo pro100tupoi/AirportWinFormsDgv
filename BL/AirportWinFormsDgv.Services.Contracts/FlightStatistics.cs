@@ -1,4 +1,4 @@
-﻿namespace AirportWinFormsDgv.Services.Contracts
+﻿namespace AirportWinFormsDgv.BL.Services.Contracts
 {
     /// <summary>
     /// Статистика по рейсам

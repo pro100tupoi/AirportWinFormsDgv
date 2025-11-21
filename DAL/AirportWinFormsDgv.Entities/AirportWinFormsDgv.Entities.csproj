@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AirportWinFormsDgv.Constants\AirportWinFormsDgv.Constants.csproj" />
+    <ProjectReference Include="..\..\AirportWinFormsDgv.Constants\AirportWinFormsDgv.Constants.csproj" />
   </ItemGroup>
 
 </Project>
