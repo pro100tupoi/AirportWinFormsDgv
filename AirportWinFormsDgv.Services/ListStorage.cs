@@ -100,7 +100,7 @@ namespace AirportWinFormsDgv.Services
         /// <exception cref="ArgumentNullException">Если flight равен null</exception>
         public async Task<decimal> CalculateRevenueAsync(FlightModel flight)
         {
-            await Task.CompletedTask; // Имитация асинхронной операции
+            await Task.CompletedTask;
             if (flight == null)
             {
                 throw new ArgumentNullException(nameof(flight));
@@ -118,13 +118,13 @@ namespace AirportWinFormsDgv.Services
         /// <returns>Объект с данными статистики</returns>
         public async Task<(int TotalFlights, int TotalPassengers, int TotalCrew, decimal TotalRevenue)> GetStatisticsAsync(IEnumerable<FlightModel> flights)
         {
-            await Task.CompletedTask; // Имитация асинхронной операции
+            await Task.CompletedTask;
             var list = flights.ToList();
             return (
                 TotalFlights: list.Count,
                 TotalPassengers: list.Sum(f => f.NumberOfPassengers),
                 TotalCrew: list.Sum(f => f.NumberOfCrew),
-                TotalRevenue: list.Sum(f => CalculateRevenue(f)) // Вызов вспомогательного метода
+                TotalRevenue: list.Sum(f => CalculateRevenue(f))
             );
         }
 
