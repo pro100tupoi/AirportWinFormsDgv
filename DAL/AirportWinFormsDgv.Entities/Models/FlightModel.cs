@@ -21,7 +21,7 @@ namespace AirportWinFormsDgv.DAL.Entities.Models
         [StringLength(ValidationConstants.FlightNumberMaxLength, ErrorMessage = "{0} должен быть не более {1} символов")]
         public string FlightNumber { get; set; } = string.Empty;
 
-        /// <inheritdoc cref="Classes.Aircrafttype"/>
+        /// <inheritdoc cref="Models.AircraftType"/>
         [Display(Name = "Тип воздушного судна")]
         public AircraftType AircraftType { get; set; }
 

@@ -10,7 +10,7 @@ namespace AirportWinFormsDgv.BL.Services.Contracts
         /// <summary>
         /// Получить все рейсы
         /// </summary>
-        Task<List<FlightModel>> GetAllFlightsAsync(CancellationToken cancellationToken = default);
+        Task<IReadOnlyCollection<FlightModel>> GetAllFlightsAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Добавить новый рейс

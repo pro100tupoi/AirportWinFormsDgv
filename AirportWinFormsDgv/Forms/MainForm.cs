@@ -15,10 +15,10 @@ namespace AirportWinFormsDgv.App.Forms
         /// <summary>
         /// Инициализирует экземпляр <see cref="MainForm"/>
         /// </summary>
-        public MainForm()
+        public MainForm(IFlightServices flightService)
         {
             InitializeComponent();
-            flightService = new FlightStorage();
+            this.flightService = flightService;
             dataGridViewflights.AutoGenerateColumns = false;
         }
 

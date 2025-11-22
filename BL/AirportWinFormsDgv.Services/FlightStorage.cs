@@ -10,7 +10,7 @@ namespace AirportWinFormsDgv.BL.Services
     {
         private readonly List<FlightModel> items = new List<FlightModel>();
 
-        Task<List<FlightModel>> IFlightServices.GetAllFlightsAsync(CancellationToken cancellationToken = default) => Task.FromResult(items);
+        Task<IReadOnlyCollection<FlightModel>> IFlightServices.GetAllFlightsAsync(CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyCollection<FlightModel>>(items);
 
         Task IFlightServices.AddFlightAsync(FlightModel flight, CancellationToken cancellationToken = default)
         {
