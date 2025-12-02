@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>pro100tupoi.$(AssemblyName)</PackageId>
+    <Authors>pro100tupoi</Authors>
+    <Description>
+      AirportWinFormsDgv.Services Цыганов Илья ИП-22-3
+    </Description>
+    <PackageReleaseNotes>Initial release of AirportWinFormsDgv.Services package</PackageReleaseNotes>
+    <Title>AirportWinFormsDgv Services</Title>
+    <Copyright>Copyright © 2025 pro100tupoi</Copyright>
+    <PackageProjectUrl>https://github.com/pro100tupoi/AirportWinFormsDgv</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pro100tupoi/AirportWinFormsDgv.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>Storage; InMemoryStorage; ListStorage</PackageTags>
+    <Product>pro100tupoi.$(AssemblyName)</Product>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Version>1.1.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DAL\AirportWinFormsDgv.Entities\AirportWinFormsDgv.Entities.csproj" />
+    <ProjectReference Include="..\AirportWinFormsDgv.Services.Contracts\AirportWinFormsDgv.Services.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

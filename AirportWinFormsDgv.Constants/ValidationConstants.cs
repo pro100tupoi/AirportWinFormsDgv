@@ -3,7 +3,7 @@
     /// <summary>
     /// Общие константы приложения
     /// </summary>
-    public class AppConstants
+    public class ValidationConstants
     {
         /// <summary>
         /// Максимальная длина строки для номера рейса.

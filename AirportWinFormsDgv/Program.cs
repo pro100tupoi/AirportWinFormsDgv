@@ -1,6 +1,7 @@
-﻿using AirportWinFormsDgv.Forms;
+﻿using AirportWinFormsDgv.App.Forms;
+using AirportWinFormsDgv.BL.Services;
 
-namespace AirportWinFormsDgv
+namespace AirportWinFormsDgv.App
 {
     /// <summary>
     /// Класс точки входа в приложение.
@@ -16,7 +17,8 @@ namespace AirportWinFormsDgv
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            var flightService = new FlightStorage();
+            Application.Run(new MainForm(flightService));
         }
     }
 }
