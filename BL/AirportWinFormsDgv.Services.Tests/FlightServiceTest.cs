@@ -171,5 +171,90 @@ namespace AirportWinFormsDgv.BL.Services.Tests
             );
         }
 
+        /// <summary>
+        /// Проверка получения рейса по ID
+        /// </summary>
+        [Fact]
+        public async Task GetFlightByIdShouldReturnCorrectFlight()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var expectedFlight = new FlightModel { Id = id, FlightNumber = "SU-213" };
+            mockStorage.Setup(x => x.GetFlightByIdAsync(id, cancellationTokenSource.Token))
+                       .ReturnsAsync(expectedFlight);
+
+            // Act
+            var result = await service.GetFlightByIdAsync(id, cancellationTokenSource.Token);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeSameAs(expectedFlight);
+            result.Id.Should().Be(id);
+            mockStorage.Verify(x => x.GetFlightByIdAsync(id, cancellationTokenSource.Token), Times.Once);
+        }
+
+        /// <summary>
+        /// Проверка расчета выручки рейса
+        /// </summary>
+        [Fact]
+        public async Task CalculateRevenueShouldReturnCorrectValue()
+        {
+            // Arrange
+            var flight = new FlightModel
+            {
+                NumberOfPassengers = 100,
+                TaxPerPassenger = 200m,
+                NumberOfCrew = 10,
+                TaxPerCrew = 50m,
+                ServicePercentage = 10m
+            };
+
+            // Act
+            var result = await service.CalculateRevenueAsync(flight, cancellationTokenSource.Token);
+
+            // Assert
+            var expectedRevenue = (flight.NumberOfPassengers * flight.TaxPerPassenger +
+                                  flight.NumberOfCrew * flight.TaxPerCrew) +
+                                 flight.ServicePercentage;
+            result.Should().Be(expectedRevenue);
+        }
+
+        /// <summary>
+        /// Проверка выброса исключения при передаче null в CalculateRevenue
+        /// </summary>
+        [Fact]
+        public async Task CalculateRevenueShouldThrowArgumentNullExceptionWhenFlightIsNull()
+        {
+            // Arrange
+            FlightModel? nullFlight = null;
+
+            // Act & Assert
+            await service.Invoking(x => x.CalculateRevenueAsync(nullFlight!, cancellationTokenSource.Token))
+                         .Should().ThrowAsync<ArgumentNullException>();
+        }
+
+        /// <summary>
+        /// Проверка вызова метода обновления в хранилище с правильным объектом
+        /// </summary>
+        [Fact]
+        public async Task UpdateFlightShouldCallStorageWithCorrectFlight()
+        {
+            // Arrange
+            var flight = new FlightModel
+            {
+                Id = Guid.NewGuid(),
+                FlightNumber = "TEST123",
+                AircraftType = AircraftType.Airbus
+            };
+
+            // Act
+            await service.UpdateFlightAsync(flight, cancellationTokenSource.Token);
+
+            // Assert
+            mockStorage.Verify(x => x.UpdateFlightAsync(
+                It.Is<FlightModel>(f => f.Id == flight.Id && f.FlightNumber == flight.FlightNumber),
+                cancellationTokenSource.Token), Times.Once);
+        }
+
     }
 }
