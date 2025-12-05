@@ -108,7 +108,6 @@ namespace AirportWinFormsDgv.BL.Services
             var sw = Stopwatch.StartNew();
             try
             {
-                // Бизнес-логика: вычисление выручки
                 if (flight == null)
                 {
                     logger.LogError("CalculateRevenueAsync: передан null-объект");
