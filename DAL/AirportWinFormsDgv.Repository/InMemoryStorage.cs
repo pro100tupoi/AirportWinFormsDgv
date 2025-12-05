@@ -1,24 +1,25 @@
-﻿using AirportWinFormsDgv.BL.Services.Contracts;
-using AirportWinFormsDgv.DAL.Entities.Models;
+﻿using AirportWinFormsDgv.DAL.Entities.Models;
+using AirportWinFormsDgv.DAL.Repository.Contracts;
 
-namespace AirportWinFormsDgv.BL.Services
+namespace AirportWinFormsDgv.DAL.Repository
 {
     /// <summary>
-    /// Реализация IFlightServices с хранением данных в памяти
+    /// Класс inMemory хранилища в виде списка <see cref="List{FlightModel}"/> для 
+    /// объектов класса <see cref="FlightModel"/>
     /// </summary>
-    public class FlightStorage : IFlightServices
+    public class InMemoryStorage : IStorage
     {
         private readonly List<FlightModel> items = new List<FlightModel>();
 
-        Task<IReadOnlyCollection<FlightModel>> IFlightServices.GetAllFlightsAsync(CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyCollection<FlightModel>>(items);
+        Task<IReadOnlyCollection<FlightModel>> IStorage.GetAllFlightsAsync(CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyCollection<FlightModel>>(items);
 
-        Task IFlightServices.AddFlightAsync(FlightModel flight, CancellationToken cancellationToken = default)
+        Task IStorage.AddFlightAsync(FlightModel flight, CancellationToken cancellationToken = default)
         {
             items.Add(flight);
             return Task.CompletedTask;
         }
 
-        Task IFlightServices.UpdateFlightAsync(FlightModel flight, CancellationToken cancellationToken = default)
+        Task IStorage.UpdateFlightAsync(FlightModel flight, CancellationToken cancellationToken = default)
         {
             var index = items.FindIndex(f => f.Id == flight.Id);
             if (index >= 0)
@@ -28,15 +29,15 @@ namespace AirportWinFormsDgv.BL.Services
             return Task.CompletedTask;
         }
 
-        Task IFlightServices.DeleteFlightAsync(Guid id, CancellationToken cancellationToken = default)
+        Task IStorage.DeleteFlightAsync(Guid id, CancellationToken cancellationToken = default)
         {
             items.RemoveAll(f => f.Id == id);
             return Task.CompletedTask;
         }
 
-        Task<FlightModel?> IFlightServices.GetFlightByIdAsync(Guid id, CancellationToken cancellationToken = default) => Task.FromResult(items.FirstOrDefault(f => f.Id == id));
+        Task<FlightModel?> IStorage.GetFlightByIdAsync(Guid id, CancellationToken cancellationToken = default) => Task.FromResult(items.FirstOrDefault(f => f.Id == id));
 
-        Task<decimal> IFlightServices.CalculateRevenueAsync(FlightModel flight, CancellationToken cancellationToken = default)
+        Task<decimal> IStorage.CalculateRevenueAsync(FlightModel flight, CancellationToken cancellationToken = default)
         {
             if (flight == null)
             {
@@ -50,10 +51,10 @@ namespace AirportWinFormsDgv.BL.Services
             return Task.FromResult(result);
         }
 
-        async Task<FlightStatistics> IFlightServices.GetStatisticsAsync(CancellationToken cancellationToken = default)
+        async Task<FlightStorageStatistics> IStorage.GetStatisticsAsync(CancellationToken cancellationToken = default)
         {
             await Task.CompletedTask;
-            return new FlightStatistics
+            return new FlightStorageStatistics
             {
                 TotalFlights = items.Count,
                 TotalPassengers = items.Sum(f => f.NumberOfPassengers),
