@@ -112,6 +112,7 @@ namespace AirportWinFormsDgv.BL.Services.Tests
             mockStorage.Setup(s => s.GetStatisticsAsync(cancellationTokenSource.Token))
                        .ReturnsAsync(expectedStatistics);
 
+            // Act
             var result = await service.GetStatisticsAsync(cancellationTokenSource.Token);
 
             // Assert
@@ -140,35 +141,14 @@ namespace AirportWinFormsDgv.BL.Services.Tests
                 ServicePercentage = 12.0m
             };
 
-            mockStorage.Setup(x => x.UpdateFlightAsync(
-                It.Is<FlightModel>(f =>
-                    f.FlightNumber == incomingFlight.FlightNumber &&
-                    f.AircraftType == incomingFlight.AircraftType &&
-                    f.ArrivalTime == incomingFlight.ArrivalTime &&
-                    f.NumberOfPassengers == incomingFlight.NumberOfPassengers &&
-                    f.TaxPerPassenger == incomingFlight.TaxPerPassenger &&
-                    f.NumberOfCrew == incomingFlight.NumberOfCrew &&
-                    f.TaxPerCrew == incomingFlight.TaxPerCrew &&
-                    f.ServicePercentage == incomingFlight.ServicePercentage
-                ), cancellationTokenSource.Token)
-            ).Returns(Task.CompletedTask);
-
             // Act
             await service.UpdateFlightAsync(incomingFlight, cancellationTokenSource.Token);
 
             // Assert
             mockStorage.Verify(s => s.UpdateFlightAsync(
-                It.Is<FlightModel>(f =>
-                    f.FlightNumber == incomingFlight.FlightNumber &&
-                    f.AircraftType == incomingFlight.AircraftType &&
-                    f.ArrivalTime == incomingFlight.ArrivalTime &&
-                    f.NumberOfPassengers == incomingFlight.NumberOfPassengers &&
-                    f.TaxPerPassenger == incomingFlight.TaxPerPassenger &&
-                    f.NumberOfCrew == incomingFlight.NumberOfCrew &&
-                    f.TaxPerCrew == incomingFlight.TaxPerCrew &&
-                    f.ServicePercentage == incomingFlight.ServicePercentage
-                ), cancellationTokenSource.Token), Times.Once
-            );
+                incomingFlight, // ← Просто передаём объект, который передавали в метод
+                cancellationTokenSource.Token
+            ), Times.Once);
         }
 
         /// <summary>
@@ -228,9 +208,11 @@ namespace AirportWinFormsDgv.BL.Services.Tests
             // Arrange
             FlightModel? nullFlight = null;
 
-            // Act & Assert
-            await service.Invoking(x => x.CalculateRevenueAsync(nullFlight!, cancellationTokenSource.Token))
-                         .Should().ThrowAsync<ArgumentNullException>();
+            // Act
+            Func<Task> action = async () => await service.CalculateRevenueAsync(nullFlight!, cancellationTokenSource.Token);
+
+            // Assert
+            await action.Should().ThrowAsync<ArgumentNullException>();
         }
 
         /// <summary>
