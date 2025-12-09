@@ -25,7 +25,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DAL\AirportWinFormsDgv.Entities\AirportWinFormsDgv.Entities.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DAL\AirportWinFormsDgv.Repository.Contracts\AirportWinFormsDgv.Repository.Contracts.csproj" />
     <ProjectReference Include="..\AirportWinFormsDgv.Services.Contracts\AirportWinFormsDgv.Services.Contracts.csproj" />
   </ItemGroup>
 

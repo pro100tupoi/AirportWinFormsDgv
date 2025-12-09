@@ -1,5 +1,8 @@
 ﻿using AirportWinFormsDgv.App.Forms;
 using AirportWinFormsDgv.BL.Services;
+using AirportWinFormsDgv.DAL.Repository;
+using Serilog;
+using Serilog.Extensions.Logging;
 
 namespace AirportWinFormsDgv.App
 {
@@ -14,11 +17,22 @@ namespace AirportWinFormsDgv.App
         [STAThread]
         public static void Main()
         {
+            Log.Logger = new LoggerConfiguration()
+           .MinimumLevel.Debug()
+           .WriteTo.Seq("http://localhost:5341",
+                apiKey: "0GUsqcpXOHLJXZh6vDne")
+            .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 7)
+            .CreateLogger();
+
+            var loggerFactory = new SerilogLoggerFactory(Log.Logger, dispose: true);
+
+            var storage = new InMemoryStorage();
+            var service = new FlightService(storage, loggerFactory);
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            var flightService = new FlightStorage();
-            Application.Run(new MainForm(flightService));
+            Application.Run(new MainForm(service));
         }
     }
 }
