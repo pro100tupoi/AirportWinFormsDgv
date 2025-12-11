@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.Reposito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.Services.Tests", "..\BL\AirportWinFormsDgv.Services.Tests\AirportWinFormsDgv.Services.Tests.csproj", "{DEBCB5A4-F995-4003-91B7-A86FA46F365E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.DatabaseStorage", "..\DAL\AirportWinFormsDgv.DatabaseStorage\AirportWinFormsDgv.DatabaseStorage.csproj", "{59AA774F-D632-427F-952C-00B6327FA2DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{DEBCB5A4-F995-4003-91B7-A86FA46F365E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEBCB5A4-F995-4003-91B7-A86FA46F365E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEBCB5A4-F995-4003-91B7-A86FA46F365E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59AA774F-D632-427F-952C-00B6327FA2DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59AA774F-D632-427F-952C-00B6327FA2DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59AA774F-D632-427F-952C-00B6327FA2DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59AA774F-D632-427F-952C-00B6327FA2DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{9DC7B379-F34E-43DF-BA88-53DD7E9E2A8E} = {80C59DDC-C48B-4EBC-9F5F-91CEF980AC66}
 		{7E44BD2D-3E98-44BA-9CD0-4006CEE73CB2} = {80C59DDC-C48B-4EBC-9F5F-91CEF980AC66}
 		{DEBCB5A4-F995-4003-91B7-A86FA46F365E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{59AA774F-D632-427F-952C-00B6327FA2DC} = {80C59DDC-C48B-4EBC-9F5F-91CEF980AC66}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {69FEA453-8707-4F51-B708-DECA8308D704}

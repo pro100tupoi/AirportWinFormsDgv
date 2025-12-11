@@ -1,5 +1,6 @@
 ﻿using AirportWinFormsDgv.App.Forms;
 using AirportWinFormsDgv.BL.Services;
+using AirportWinFormsDgv.DAL.DatabaseStorage;
 using AirportWinFormsDgv.DAL.Repository;
 using Serilog;
 using Serilog.Extensions.Logging;
@@ -26,7 +27,7 @@ namespace AirportWinFormsDgv.App
 
             var loggerFactory = new SerilogLoggerFactory(Log.Logger, dispose: true);
 
-            var storage = new InMemoryStorage();
+            var storage = new FlightDatabaseStorage();
             var service = new FlightService(storage, loggerFactory);
 
             // To customize application configuration such as set high DPI settings or default font,
