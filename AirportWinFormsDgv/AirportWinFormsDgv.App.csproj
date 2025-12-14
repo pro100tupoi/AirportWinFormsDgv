@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BL\AirportWinFormsDgv.Services.Contracts\AirportWinFormsDgv.Services.Contracts.csproj" />
     <ProjectReference Include="..\BL\AirportWinFormsDgv.Services\AirportWinFormsDgv.Services.csproj" />
+    <ProjectReference Include="..\DAL\AirportWinFormsDgv.DatabaseStorage\AirportWinFormsDgv.DatabaseStorage.csproj" />
     <ProjectReference Include="..\DAL\AirportWinFormsDgv.Repository\AirportWinFormsDgv.Repository.csproj" />
   </ItemGroup>
 
