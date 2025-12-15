@@ -1,0 +1,51 @@
+﻿@using AirportWinFormsDgv.DAL.Entities.Models
+
+@model FlightModel
+
+@{
+    ViewData["Title"] = "Удалить рейс";
+}
+
+<h2>Подтвердите удаление</h2>
+
+<h3>Вы уверены, что хотите удалить рейс "@Model.FlightNumber"?</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Номер рейса</dt>
+        <dd class="col-sm-10">@Model.FlightNumber</dd>
+
+        <dt class="col-sm-2">Тип самолёта</dt>
+        <dd class="col-sm-10">@Model.AircraftType</dd>
+
+        <dt class="col-sm-2">Время прибытия</dt>
+        <dd class="col-sm-10">@Model.ArrivalTime.ToString("g")</dd>
+
+        <dt class="col-sm-2">Пассажиры</dt>
+        <dd class="col-sm-10">@Model.NumberOfPassengers</dd>
+
+        <dt class="col-sm-2">Сбор за пассажира</dt>
+        <dd class="col-sm-10">@Model.TaxPerPassenger.ToString("F2")</dd>
+
+        <dt class="col-sm-2">Экипаж</dt>
+        <dd class="col-sm-10">@Model.NumberOfCrew</dd>
+
+        <dt class="col-sm-2">Сбор за экипаж</dt>
+        <dd class="col-sm-10">@Model.TaxPerCrew.ToString("F2")</dd>
+
+        <dt class="col-sm-2">Надбавка (%)</dt>
+        <dd class="col-sm-10">@Model.ServicePercentage.ToString("F2")</dd>
+
+        <dt class="col-sm-2">Выручка</dt>
+        <dd class="col-sm-10">
+            @((Model.NumberOfPassengers * Model.TaxPerPassenger + Model.NumberOfCrew * Model.TaxPerCrew) + Model.ServicePercentage)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>

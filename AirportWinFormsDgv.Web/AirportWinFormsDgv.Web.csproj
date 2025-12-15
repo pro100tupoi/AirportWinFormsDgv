@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BL\AirportWinFormsDgv.Services.Contracts\AirportWinFormsDgv.Services.Contracts.csproj" />
+    <ProjectReference Include="..\BL\AirportWinFormsDgv.Services\AirportWinFormsDgv.Services.csproj" />
+    <ProjectReference Include="..\DAL\AirportWinFormsDgv.DatabaseStorage\AirportWinFormsDgv.DatabaseStorage.csproj" />
+    <ProjectReference Include="..\DAL\AirportWinFormsDgv.Entities\AirportWinFormsDgv.Entities.csproj" />
+    <ProjectReference Include="..\DAL\AirportWinFormsDgv.Repository.Contracts\AirportWinFormsDgv.Repository.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

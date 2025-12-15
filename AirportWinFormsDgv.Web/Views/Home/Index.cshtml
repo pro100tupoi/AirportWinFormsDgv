@@ -1,0 +1,108 @@
+﻿@using AirportWinFormsDgv.DAL.Entities.Models
+@model IndexViewModel
+
+@{
+    ViewData["Title"] = "Просмотр рейсов";
+}
+
+<a asp-controller="Home" asp-action="Create" class="btn btn-primary">Добавить</a>
+<a asp-controller="Home" asp-action="Index" class="btn btn-light">Обновить</a>
+
+<div class="text-center">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Номер рейса</th>
+                <th>Тип самолёта</th>
+                <th>Время прибытия</th>
+                <th>Количество пассажиров</th>
+                <th>Сбор на пассажира</th>
+                <th>Количество экипажа</th>
+                <th>Сбор на экипаж</th>
+                <th>Процент надбавки</th>
+                <th>Выручка</th>
+                <th colspan="2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var flight in Model.Flights)
+            {
+                <tr>
+                    <td>@flight.FlightNumber</td>
+                    <td>
+                        @(flight.AircraftType switch
+                        {
+                            AircraftType.Airbus => "Эйрбас",
+                            AircraftType.Boeing => "Боинг",
+                            AircraftType.UnitedAircraftCorporation => "ОАК",
+                            AircraftType.Unknown => "Неизвестно",
+                            _ => flight.AircraftType.ToString()
+                        })
+                </td>
+                    <td>@flight.ArrivalTime.ToString("g")</td>
+                    <td>@flight.NumberOfPassengers</td>
+                    <td>@flight.TaxPerPassenger.ToString("F2")</td>
+                    <td>@flight.NumberOfCrew</td>
+                    <td>@flight.TaxPerCrew.ToString("F2")</td>
+                    <td>@flight.ServicePercentage.ToString("F2")</td>
+                    <td>@((flight.NumberOfPassengers * flight.TaxPerPassenger + flight.NumberOfCrew * flight.TaxPerCrew) + flight.ServicePercentage)</td>
+                    <td>
+                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@flight.Id" class="btn btn-sm btn-primary">
+                            Изменить
+                        </a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger"
+                                data-bs-toggle="modal" data-bs-target="#confirm-removal-modal"
+                                data-bs-id="@flight.Id">
+                            Удалить
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="11">
+                    Общее количество рейсов: @Model.Statistics.TotalFlights |
+                    Общее количество пассажиров: @Model.Statistics.TotalPassengers |
+                    Общее количество экипажа: @Model.Statistics.TotalCrew |
+                    Общая выручка: @Model.Statistics.TotalRevenue.ToString("F2")
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="modal fade" tabindex="-1" id="confirm-removal-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Удаление</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены?</p>
+            </div>
+            <div class="modal-footer">
+                <form asp-controller="Home" asp-action="Delete" method="post">
+                    <input type="hidden" id="id-to-remove" name="id" />
+                    <button type="submit" class="btn btn-primary">OK</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const modal = document.getElementById("confirm-removal-modal");
+        if (modal) {
+            const input = document.getElementById("id-to-remove");
+            modal.addEventListener("show.bs.modal", event => {
+                input.value = event.relatedTarget.getAttribute("data-bs-id");
+            });
+        }
+    </script>
+}
