@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DAL\AirportWinFormsDgv.Entities\AirportWinFormsDgv.Entities.csproj" />
+    <ProjectReference Include="..\..\DAL\AirportWinFormsDgv.Repository.Contracts\AirportWinFormsDgv.Repository.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,71 @@
+﻿@using AirportWinFormsDgv.DAL.Entities.Models
+
+@model FlightFormViewModel
+
+@{
+    ViewData["Title"] = Model.PageTitle;
+}
+
+<form method="post" asp-controller="Flights" asp-action="@ViewContext.RouteData.Values["Action"]" class="needs-validation">
+    @if (Model.Id != Guid.Empty)
+    {
+        <input asp-for="Id" type="hidden" />
+    }
+
+    <div class="form-floating mb-3">
+        <input asp-for="FlightNumber" class="form-control" />
+        <label asp-for="FlightNumber"></label>
+        <span asp-validation-for="FlightNumber"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <select asp-for="AircraftType" asp-items="Html.GetEnumSelectList<AircraftType>()" class="form-select">
+            <option value="">-- Выберите тип --</option>
+        </select>
+        <label asp-for="AircraftType"></label>
+        <span asp-validation-for="AircraftType"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="ArrivalTime" type="datetime-local" class="form-control" />
+        <label asp-for="ArrivalTime"></label>
+        <span asp-validation-for="ArrivalTime"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="NumberOfPassengers" type="number" class="form-control" />
+        <label asp-for="NumberOfPassengers"></label>
+        <span asp-validation-for="NumberOfPassengers"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="TaxPerPassenger" type="number" step="0.01" class="form-control" />
+        <label asp-for="TaxPerPassenger"></label>
+        <span asp-validation-for="TaxPerPassenger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="NumberOfCrew" type="number" class="form-control" />
+        <label asp-for="NumberOfCrew"></label>
+        <span asp-validation-for="NumberOfCrew"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="TaxPerCrew" type="number" step="0.01" class="form-control" />
+        <label asp-for="TaxPerCrew"></label>
+        <span asp-validation-for="TaxPerCrew"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="ServicePercentage" type="number" step="0.01" class="form-control" />
+        <label asp-for="ServicePercentage"></label>
+        <span asp-validation-for="ServicePercentage"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-controller="Flights" asp-action="Index" class="btn btn-danger">Отмена</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

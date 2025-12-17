@@ -1,4 +1,5 @@
 ﻿using AirportWinFormsDgv.DAL.Entities.Models;
+using AirportWinFormsDgv.DAL.Repository.Contracts;
 
 namespace AirportWinFormsDgv.BL.Services.Contracts
 {
@@ -40,6 +41,6 @@ namespace AirportWinFormsDgv.BL.Services.Contracts
         /// <summary>
         /// Получить статистику по рейсам
         /// </summary>
-        Task<FlightStatistics> GetStatisticsAsync(CancellationToken cancellationToken = default);
+        Task<FlightStorageStatistics> GetStatisticsAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -1,0 +1,81 @@
+﻿@using AirportWinFormsDgv.DAL.Entities.Models
+
+@model FlightModel
+
+@{
+    ViewData["Title"] = "Изменить рейс";
+}
+
+<h2>Изменить рейс</h2>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="FlightNumber" class="control-label"></label>
+        <input asp-for="FlightNumber" class="form-control" />
+        <span asp-validation-for="FlightNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AircraftType" class="control-label"></label>
+        @{
+            var aircraftTypes = Html.GetEnumSelectList<AircraftType>()
+            .Where(option => option.Value != ((int)AircraftType.Unknown).ToString())
+            .ToList();
+        }
+
+        <select asp-for="AircraftType" asp-items="aircraftTypes" class="form-control">
+            <option value="">-- Выберите тип --</option>
+        </select>
+        <span asp-validation-for="AircraftType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ArrivalTime" class="control-label"></label>
+        <input asp-for="ArrivalTime" class="form-control" />
+        <span asp-validation-for="ArrivalTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumberOfPassengers" class="control-label"></label>
+        <input asp-for="NumberOfPassengers" class="form-control" />
+        <span asp-validation-for="NumberOfPassengers" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TaxPerPassenger" class="control-label"></label>
+        <input asp-for="TaxPerPassenger" class="form-control" />
+        <span asp-validation-for="TaxPerPassenger" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NumberOfCrew" class="control-label"></label>
+        <input asp-for="NumberOfCrew" class="form-control" />
+        <span asp-validation-for="NumberOfCrew" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TaxPerCrew" class="control-label"></label>
+        <input asp-for="TaxPerCrew" class="form-control" />
+        <span asp-validation-for="TaxPerCrew" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ServicePercentage" class="control-label"></label>
+        <input asp-for="ServicePercentage" class="form-control" />
+        <span asp-validation-for="ServicePercentage" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Сохранить" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

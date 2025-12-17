@@ -130,28 +130,19 @@ namespace AirportWinFormsDgv.BL.Services
         /// <summary>
         /// Получить статистику по рейсам
         /// </summary>
-        public async Task<FlightStatistics> GetStatisticsAsync(CancellationToken cancellationToken = default)
+        public async Task<FlightStorageStatistics> GetStatisticsAsync(CancellationToken cancellationToken = default)
         {
             var sw = Stopwatch.StartNew();
             try
             {
-                var storageStats = await storage.GetStatisticsAsync(cancellationToken);
-
-                // Преобразуем из FlightStorageStatistics в FlightStatistics
-                var result = new FlightStatistics
-                {
-                    TotalFlights = storageStats.TotalFlights,
-                    TotalPassengers = storageStats.TotalPassengers,
-                    TotalCrew = storageStats.TotalCrew,
-                    TotalRevenue = storageStats.TotalRevenue
-                };
-
-                return result;
+                var stats = await storage.GetStatisticsAsync(cancellationToken);
+                return stats; // ← Это FlightStorageStatistics
             }
             finally
             {
                 sw.Stop();
-                logger.LogDebug("FlightService.GetStatisticsAsync выполнен за {ms:F6} мс", sw.ElapsedMilliseconds);
+                double ms = sw.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
+                logger.LogDebug("FlightService.GetStatisticsAsync выполнен за {ElapsedMs:F6} мс", ms);
             }
         }
     }

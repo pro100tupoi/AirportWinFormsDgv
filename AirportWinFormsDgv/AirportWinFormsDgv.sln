@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.Services
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.DatabaseStorage", "..\DAL\AirportWinFormsDgv.DatabaseStorage\AirportWinFormsDgv.DatabaseStorage.csproj", "{59AA774F-D632-427F-952C-00B6327FA2DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirportWinFormsDgv.Web", "..\AirportWinFormsDgv.Web\AirportWinFormsDgv.Web.csproj", "{E6184261-D267-4204-86A1-267A7DFD211A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{59AA774F-D632-427F-952C-00B6327FA2DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59AA774F-D632-427F-952C-00B6327FA2DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59AA774F-D632-427F-952C-00B6327FA2DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6184261-D267-4204-86A1-267A7DFD211A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6184261-D267-4204-86A1-267A7DFD211A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6184261-D267-4204-86A1-267A7DFD211A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6184261-D267-4204-86A1-267A7DFD211A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
