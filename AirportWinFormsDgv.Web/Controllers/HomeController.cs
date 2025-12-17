@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading;
 using AirportWinFormsDgv.BL.Services.Contracts;
 using AirportWinFormsDgv.DAL.Entities.Models;
 using AirportWinFormsDgv.Web.Models;
@@ -12,7 +13,6 @@ namespace AirportWinFormsDgv.Web.Controllers
     public class HomeController : Controller
     {
         private readonly IFlightServices flightServices;
-        private readonly CancellationTokenSource cancellationTokenSource = new();
 
         public HomeController(IFlightServices flightServices)
         {
@@ -22,10 +22,10 @@ namespace AirportWinFormsDgv.Web.Controllers
         /// <summary>
         /// Отображает главную страницу со списком рейсов и статистикой.
         /// </summary>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var flightsTask = flightServices.GetAllFlightsAsync(cancellationTokenSource.Token);
-            var statisticsTask = flightServices.GetStatisticsAsync(cancellationTokenSource.Token);
+            var flightsTask = flightServices.GetAllFlightsAsync(cancellationToken);
+            var statisticsTask = flightServices.GetStatisticsAsync(cancellationToken);
 
             var model = new IndexViewModel
             {
@@ -55,14 +55,14 @@ namespace AirportWinFormsDgv.Web.Controllers
         /// Принимает данные нового рейса из формы и добавляет его.
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Create(FlightModel model)
+        public async Task<IActionResult> Create(FlightModel model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            await flightServices.AddFlightAsync(model, cancellationTokenSource.Token);
+            await flightServices.AddFlightAsync(model, cancellationToken);
             return RedirectToAction(nameof(Index));
         }
 
@@ -85,14 +85,14 @@ namespace AirportWinFormsDgv.Web.Controllers
         /// Принимает изменения рейса из формы и сохраняет их.
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Edit(FlightModel model)
+        public async Task<IActionResult> Edit(FlightModel model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            await flightServices.UpdateFlightAsync(model, cancellationTokenSource.Token);
+            await flightServices.UpdateFlightAsync(model, cancellationToken);
             return RedirectToAction(nameof(Index));
         }
 
@@ -100,9 +100,9 @@ namespace AirportWinFormsDgv.Web.Controllers
         /// Отображает страницу подтверждения удаления рейса.
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
-            var flight = await flightServices.GetFlightByIdAsync(id, cancellationTokenSource.Token);
+            var flight = await flightServices.GetFlightByIdAsync(id, cancellationToken);
             if (flight == null)
             {
                 return NotFound();
@@ -115,9 +115,9 @@ namespace AirportWinFormsDgv.Web.Controllers
         /// Выполняет удаление рейса после подтверждения.
         /// </summary>
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, CancellationToken cancellationToken)
         {
-            await flightServices.DeleteFlightAsync(id, cancellationTokenSource.Token);
+            await flightServices.DeleteFlightAsync(id, cancellationToken);
             return RedirectToAction(nameof(Index));
         }
 
